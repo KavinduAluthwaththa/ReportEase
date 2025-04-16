@@ -15,10 +15,11 @@
 
         <label for="role">Role</label>
         <select id="role" name="role">
-            <option value="student">Student</option>
-            <option value="lecturer">Lecturer</option>
-            <option value="dean">Dean</option>
-            <option value="maintenance">Maintenance Department</option>
+            <option value="stu">Student</option>
+            <option value="lec">Lecturer</option>
+            <option value="fs">Faculty Staff</option>
+            <option value="hod">Head of the Faculty</option>
+            <option value="md">Maintenance Department</option>
         </select>
 
         <label for="faculty">Faculty</label>
