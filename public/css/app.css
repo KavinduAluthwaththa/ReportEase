@@ -50,6 +50,7 @@ select {
 }
 
 .form-button {
+    font-weight: 600;
     background-color: #6D81FC;
     color: white;
     padding: 12px 20px;
@@ -69,11 +70,12 @@ select {
 }
 
 .signup-link a {
-    color: #6D81FC;
+    /* color: #6D81FC; */
     text-decoration: none;
 }
 
 .homepage-button {
+    font-weight: 600;
     color: #FFFFFF;
     background-color: #6D81FC;
     padding: 12px 20px;
