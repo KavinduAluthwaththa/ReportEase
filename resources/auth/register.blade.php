@@ -5,16 +5,16 @@
     <h1>Register</h1>
     <form>
         <label for="username">Username</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username" required>
 
         <label for="email">Email</label>
-        <input type="email" id="email" name="email">
+        <input type="email" id="email" name="email" required>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required>
 
         <label for="role">Role</label>
-        <select id="role" name="role">
+        <select id="role" name="role" required>
             <option value="stu">Student</option>
             <option value="lec">Lecturer</option>
             <option value="fs">Faculty Staff</option>
@@ -22,7 +22,7 @@
             <option value="md">Maintenance Department</option>
         </select>
 
-        <label for="faculty">Faculty</label>
+        <label for="faculty">Faculty</label required>
         <select id="faculty" name="faculty">
             <option value="Agricultural Sciences">Faculuty of Agricultural Sciences</option>
             <option value="Applied Sciences">Faculuty of Applied Sciences</option>

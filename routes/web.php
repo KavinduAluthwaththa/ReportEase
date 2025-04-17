@@ -1,5 +1,6 @@
 <![CDATA<?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login',[AuthController::class, 'Register'])->name('Login');
+Route::get('/register',[AuthController::class, 'Login'])->name('Register');
 
 Route::get('/register', function () {
     return view('register');
