@@ -18,9 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login',[AuthController::class, 'Register'])->name('Login');
-Route::get('/register',[AuthController::class, 'Login'])->name('Register');
-
-Route::get('/register', function () {
-    return view('register');
-});
+Route::get('/register',[AuthController::class, 'Register'])->name('Register');
+Route::get('/login',[AuthController::class, 'Login'])->name('Login');

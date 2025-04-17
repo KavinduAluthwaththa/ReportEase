@@ -8,12 +8,12 @@ class AuthController extends Controller
 {
     public function Register()
     {
-        return view('auth.register');
+        return view('register');
     }
 
     public function Login()
     {
-        return view('auth.login');
+        return view('login');
     }
 
 }
