@@ -24,15 +24,15 @@
 
         <label for="faculty">Faculty</label required>
         <select id="faculty" name="faculty">
-            <option value="Agricultural Sciences">Faculuty of Agricultural Sciences</option>
-            <option value="Applied Sciences">Faculuty of Applied Sciences</option>
-            <option value="Geomatics">Faculuty of Geomatics</option>
-            <option value="Graduate Studies">Faculuty of Graduate Studies</option>
-            <option value="Management Studies">Faculuty of Management Studies</option>
-            <option value="Medicine">Faculuty of Medicine</option>
-            <option value="Social Sciences and Languages">Faculuty of Social Sciences and Languages</option>
-            <option value="Technology">Faculuty of Technology</option>
-            <option value="Computing">Faculuty of Computing</option>
+            <option value="Agri">Faculty of Agricultural Sciences</option>
+            <option value="App">Faculty of Applied Sciences</option>
+            <option value="Geo">Faculty of Geomatics</option>
+            <option value="Grad">Faculty of Graduate Studies</option>
+            <option value="Mana">Faculty of Management Studies</option>
+            <option value="Med">Faculty of Medicine</option>
+            <option value="Social">Faculty of Social Sciences and Languages</option>
+            <option value="Tech">Faculty of Technology</option>
+            <option value="Com">Faculty of Computing</option>
         </select>
 
         <input type="submit" value="Register" class="form-button">
