@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-container">
     <h1>Register</h1>
-    <form>
+    <form method="POST" action="{{ route('register.custom') }}">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
 

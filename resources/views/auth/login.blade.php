@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-container">
     <h1>Login to your account</h1>
-    <form>
+    <form method="'POST' action="{{ route('login.custom') }}">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
 
