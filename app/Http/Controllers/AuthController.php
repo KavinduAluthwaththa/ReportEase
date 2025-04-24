@@ -39,31 +39,39 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    public function Register2()
+    {
+        return view('auth.register2');
+    }
+
     public function RegisterCustom(Request $request)
     {
         // Validate the request
         $request->validate(
             [
-                'username' => 'required|min:3|max:20',
-                'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6|confirmed',
-                'role' => 'required|in:stu,lec,fs,hod,md',
-                'faculty' => 'required',
             ]
         );
 
         // Create the user
         $data = $request->all();
+        $data['name'] = 'Test User';
+        $data['username'] = 'testuser';
+        $data['email'] = 'test@example.com';
+        $data['role'] = 'stu';
+        $data['faculty'] = 'test faculty';
         $check = $this->create($data);
 
-        // Check if the user was created successfully
+        // Check if the user was created successfully (Redirect logic remains the same)
         return redirect("Login")->withSuccess('You have successfully registered');
     }
 
     public function create(array $data)
     {
+        // Use the combined 'name' field
         return \App\Models\User::create([
-            'username' => $data['username'],
+            'name' => $data['name'], // Use combined name
+            'username' => $data['username'], // Added username
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => $data['role'],

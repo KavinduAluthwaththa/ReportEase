@@ -1,19 +1,38 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
-@section('content')
-<div class="login-container">
-    <h1>Login to your account</h1>
-    <form method='POST' action="{{ route('login.custom') }}">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+@section('auth_content')
+        <div class="register-container">
+            <h2>Sign in</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form method="POST" action="{{ route('login.custom') }}">
+                        @csrf
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+                        <div class="form-group">
+                            <input id="email" type="email" class="form-control" name="email" placeholder="Email Address *" required>
+                        </div>
 
-        <input type="submit" value="Login now" class="form-button">
-    </form>
-    <div class="signup-link">
-        Don't Have An Account ? <a href="/register">Sign Up</a>
-    </div>
-</div>
+                        <div class="form-group">
+                            <input id="password" type="password" class="form-control" name="password" placeholder="Password *" required>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="submit-button">
+                                LOGIN
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <a href="#">Forgot your password?</a>
+                        </div>
+                    </form>
+
+                    <div class="form-group">
+                        <p>Don't Have An Account ?</p>
+                        <a href="/register" class="submit-button-black">
+                            CREATE NEW ACCOUNT
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection
