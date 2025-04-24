@@ -135,7 +135,7 @@ a {
 .right-side {
     width: 60%;
     min-height: 91vh;
-    background-image: url('/images/bg.png'); /* Replace with your image */
+    background-image: url('/images/bg.png');
     background-size: cover;
     background-position: center;
     background-color: #333;
