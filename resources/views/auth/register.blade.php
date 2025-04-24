@@ -30,9 +30,7 @@
                                     <select id="role" class="form-control" name="role" required>
                                         <option value="" disabled selected>Select Your Role</option>
                                         <option value="stu">Student</option>
-                                        <option value="lec">Lecturer</option>
-                                        <option value="fs">Faculty Staff</option>
-                                        <option value="hod">Head of the Faculty</option>
+                                        <option value="fs">Faculty Adminstration</option>
                                         <option value="md">Maintenance Department</option>
                                     </select>
                                 </div>
