@@ -18,7 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register',[AuthController::class, 'Register'])->name('Register');
-Route::get('/login',[AuthController::class, 'Login'])->name('Login');
-Route::get('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom');
-Route::get('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom');
+Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom');
+Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/register2', [AuthController::class, 'Register2'])->name('register2');
+Route::post('/register', [AuthController::class, 'RegisterCustom'])->name('register');
+Route::get('/register', [AuthController::class, 'Register'])->name('register');
