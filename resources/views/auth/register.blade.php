@@ -26,6 +26,11 @@
 
                         <div class="row">
                             <div class="col-md-6">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input id="phone" type="text" class="form-control" name="phone" placeholder="+94" required>
+                                </div>
+                            </div>
                                 <div class="form-group">
                                     <select id="role" class="form-control" name="role" required>
                                         <option value="" disabled selected>Select Your Role</option>
@@ -33,11 +38,6 @@
                                         <option value="fs">Faculty Adminstration</option>
                                         <option value="md">Maintenance Department</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input id="phone" type="text" class="form-control" name="phone" placeholder="+94" required>
                                 </div>
                             </div>
                         </div>

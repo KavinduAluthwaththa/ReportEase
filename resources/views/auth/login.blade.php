@@ -2,18 +2,18 @@
 
 @section('auth_content')
         <div class="register-container">
-            <h2>Sign in</h2>
+            <h2>Login to <span style="color: #e67e22;">ReportEase</span></h2>
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <form method="POST" action="{{ route('login.custom') }}">
                         @csrf
 
                         <div class="form-group">
-                            <input id="email" type="email" class="form-control" name="email" placeholder="Email Address *" required>
+                            <input id="email" type="email" class="form-control" name="email" placeholder="Email Address" required>
                         </div>
 
                         <div class="form-group">
-                            <input id="password" type="password" class="form-control" name="password" placeholder="Password *" required>
+                            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
                         </div>
 
                         <div class="form-group d-flex justify-content-between align-items-center">
