@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('template');
 });
 
 Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom');

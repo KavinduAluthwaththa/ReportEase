@@ -5,11 +5,20 @@
     <!-- Sidebar -->
      <div class="w-1/6 bg-gray-200 p-6 border-r-2 border-r-orange-600 flex flex-col justify-between">
         <div>
-            <nav>
-                <a href="" class="block mb-4 text-orange-600 font-bold {{ Route::currentRouteName() == 'dashboard' ? 'text-orange-600' : 'text-gray-700' }}">Dashboard</a>
-                <a href="" class="block mb-4 text-orange-600 font-bold {{ Route::currentRouteName() == 'profile' ? 'text-orange-600' : 'text-gray-700' }}">Profile</a>
-                <a href="{{ route('logout') }}" class="text-red-600 font-bold">Logout</a>
+            <nav class="flex flex-col h-full justify-between">
+                <div>
+                    <a href="" class="block mb-4 font-bold {{ Route::currentRouteName() == 'dashboard' ? 'text-orange-600' : 'text-gray-700' }}">
+                        <x-heroicon-s-home /> Dashboard
+                    </a>
+                    <a href="" class="block mb-4 font-bold {{ Route::currentRouteName() == 'profile' ? 'text-orange-600' : 'text-gray-700' }}">
+                        <x-uni-setting-o /> Profile
+                    </a>
+                </div>
+                <a href="{{ route('logout') }}" class="text-red-600 font-bold">
+                    <x-gmdi-logout /> Logout
+                </a>
             </nav>
+
         </div>
     </div>
 
