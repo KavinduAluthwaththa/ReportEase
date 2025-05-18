@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('template');
 });
 
 Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom');
@@ -24,3 +24,4 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register2', [AuthController::class, 'Register2'])->name('register2');
 Route::post('/register', [AuthController::class, 'RegisterCustom'])->name('register');
 Route::get('/register', [AuthController::class, 'Register'])->name('register');
+Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
