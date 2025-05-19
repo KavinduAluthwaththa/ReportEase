@@ -23,6 +23,9 @@
     </div>
 
     <!-- Main Content -->
+     @yield('content')
+
+     
     <div class="w-5/6 p-10">
         <div class="flex items-center justify-center">
             <h1 class="text-3xl font-bold">Welcome, <span style="color: #e67e22;">Samanalee!</span></h1>

@@ -18,10 +18,9 @@ Route::get('/', function () {
     return view('template');
 });
 
-Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom');
-Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom');
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register2', [AuthController::class, 'Register2'])->name('register2');
-Route::post('/register', [AuthController::class, 'RegisterCustom'])->name('register');
-Route::get('/register', [AuthController::class, 'Register'])->name('register');
-Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+/*Authentication*/
+Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom'); /*Login Function*/
+Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom'); /*Register Function*/
+Route::get('/login', [AuthController::class, 'login'])->name('login'); /*View Login*/
+Route::get('/register', [AuthController::class, 'Register'])->name('register'); /*View Register*/
+Route::get('/logout', [AuthController::class, 'Logout'])->name('logout'); /*Logout Function*/

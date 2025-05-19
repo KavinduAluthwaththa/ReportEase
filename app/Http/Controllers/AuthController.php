@@ -7,11 +7,13 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    //return login view
     public function Login()
     {
         return view('auth.login');
     }
 
+    //validating login
     public function LoginCustom(Request $request)
     {
         // Validate the request
@@ -30,16 +32,13 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Invalid email or password'])->withInput();
     }
 
+    //return registration view
     public function Register()
     {
         return view('auth.register');
     }
 
-    public function Register2()
-    {
-        return view('auth.register2');
-    }
-
+    //validating registration
     public function RegisterCustom(Request $request)
     {
         // Validate the request
@@ -73,6 +72,7 @@ class AuthController extends Controller
         ]);
     }
 
+    //login function
     public function Logout()
     {
         auth()->logout();
