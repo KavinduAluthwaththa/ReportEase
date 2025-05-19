@@ -15,12 +15,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('template');
+    return view('student/studash');
 });
 
 /*Authentication*/
-Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom'); /*Login Function*/
-Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom'); /*Register Function*/
+
+//Login
 Route::get('/login', [AuthController::class, 'login'])->name('login'); /*View Login*/
+Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom'); /*Login Function*/
+
+//register
 Route::get('/register', [AuthController::class, 'Register'])->name('register'); /*View Register*/
-Route::get('/logout', [AuthController::class, 'Logout'])->name('logout'); /*Logout Function*/
+Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom'); /*Register Function*/
+
+//logout
+Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+
+
