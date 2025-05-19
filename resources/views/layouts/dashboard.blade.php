@@ -12,7 +12,7 @@
     {{-- Add Font Awesome for icons if needed, or use SVGs/images --}}
 </head>
 <body>
-    <div class="app-container"> {{-- Renamed for clarity --}}
+    <div class="app-container">
         <header class="app-header">
             <div class="logo">
                 {{-- Assuming RE_White.png is suitable for a dark background --}}
