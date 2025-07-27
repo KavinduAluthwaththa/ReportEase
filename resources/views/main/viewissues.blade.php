@@ -4,15 +4,14 @@
 <style>
     .info-label {
         color: #6c757d;
-        font-size: 12px;
+        font-size: 20px;
+        font-weight: 600;
         margin-bottom: 2px;
-        font-weight: normal;
     }
     .info-value {
         color: #333;
-        font-weight: 600;
         margin-bottom: 15px;
-        font-size: 14px;
+        font-size: 20px;
     }
     .issue-number {
         color: #e67e22;
@@ -66,13 +65,13 @@
             <p class="info-label">Attachments</p>
             <div style="display: flex; gap: 15px;">
                 <div style="text-align: center;">
-                    <div style="width: 80px; height: 60px; background: linear-gradient(45deg, #00d4aa, #00a8ff); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
+                    <div style="width: 100px; height: 80px; background: linear-gradient(45deg, #00d4aa, #00a8ff); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
                         <i class="fas fa-image" style="color: white; font-size: 20px;"></i>
                     </div>
                     <small style="color: #6c757d; font-size: 11px;">sts.jpg</small>
                 </div>
                 <div style="text-align: center;">
-                    <div style="width: 80px; height: 60px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
+                    <div style="width: 100px; height: 80px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
                         <i class="fas fa-image" style="color: white; font-size: 20px;"></i>
                     </div>
                     <small style="color: #6c757d; font-size: 11px;">sts2.jpg</small>
@@ -90,22 +89,55 @@
         <form action="{{ isset($issue->id) ? route('issues.update', $issue->id) : '#' }}" method="POST">
             @csrf
             @method('PUT')
-            <div style="position: relative; display: inline-block;">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="min-width: 120px; border-color: #6c757d;">
+            <div class="dropdown" style="display: inline-block;">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 120px; border-color: #6c757d;">
                     Click Here
                 </button>
-                <ul class="dropdown-menu">
-                    <li><button class="dropdown-item" type="submit" name="action" value="accept">Accept</button></li>
-                    <li><button class="dropdown-item" type="submit" name="action" value="send_to_maintenance">Send to Maintenance</button></li>
-                    <li><button class="dropdown-item" type="submit" name="action" value="change_request">Change request</button></li>
-                    <li><button class="dropdown-item" type="submit" name="action" value="reject">Reject</button></li>
-                </ul>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" type="submit" name="action" value="accept">Accept</button>
+                    <button class="dropdown-item" type="submit" name="action" value="send_to_maintenance">Send to Maintenance</button>
+                    <button class="dropdown-item" type="submit" name="action" value="change_request">Change request</button>
+                    <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
+                </div>
             </div>
             <button type="submit" style="background-color: #e67e22; color: white; border: none; padding: 8px 24px; margin-left: 15px; border-radius: 4px; font-weight: 600;">SUBMIT</button>
         </form>
     </div>
 
+    <!-- Bootstrap CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        $(document).ready(function() {
+            // Initialize dropdown
+            $('.dropdown-toggle').dropdown();
+            
+            // Handle dropdown item clicks
+            $('.dropdown-item').click(function(e) {
+                e.preventDefault();
+                var action = $(this).attr('value');
+                var form = $(this).closest('form');
+                
+                // Create hidden input for the action
+                var hiddenInput = $('<input>').attr({
+                    type: 'hidden',
+                    name: 'action',
+                    value: action
+                });
+                
+                // Remove any existing action input
+                form.find('input[name="action"]').remove();
+                
+                // Add the new action input and submit
+                form.append(hiddenInput);
+                form.submit();
+            });
+        });
+    </script>
 @stop
 
