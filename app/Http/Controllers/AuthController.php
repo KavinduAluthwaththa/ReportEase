@@ -72,7 +72,7 @@ class AuthController extends Controller
         ]);
     }
 
-    //login function
+    //logout function
     public function Logout()
     {
         auth()->logout();
