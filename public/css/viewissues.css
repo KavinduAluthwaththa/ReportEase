@@ -1,0 +1,30 @@
+.info-label {
+    color: #6c757d;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.info-value {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.issue-number {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.issue-title {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.issue-description {
+    font-size: 20px;
+    color: #6c757d;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}

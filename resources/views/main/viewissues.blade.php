@@ -1,37 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<style>
-    .info-label {
-        color: #6c757d;
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 2px;
-    }
-    .info-value {
-        color: #333;
-        margin-bottom: 15px;
-        font-size: 20px;
-    }
-    .issue-number {
-        color: #e67e22;
-        font-weight: bold;
-    }
-    .issue-title {
-        color: #333;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-    .issue-description {
-        font-size: 20px;
-        color: #6c757d;
-        line-height: 1.5;
-        margin-bottom: 25px;
-    }
-</style>
+<!-- Custom CSS for this page -->
+<link rel="stylesheet" href="{{ asset('css/viewissues.css') }}">
 
     <div class="w-5/6 p-10">
-        <h1 style="font-size: 45px; margin-bottom: 20px;">Issue No: <span class="issue-number">IS{{ $issue->id ?? 'T001' }}</span></h1>
+        <h1 style="font-size: 45px; margin-bottom: 20px; font-weight: bold;">Issue No: <span class="issue-number">IS{{ $issue->id ?? 'T001' }}</span></h1>
 
         <h2 class="issue-title" style="font-size: 30px;">{{ $issue->title ?? 'Projector in the NLH is not working' }}</h2>
         
@@ -47,6 +21,10 @@
                     <p class="info-label">Reporter's email</p>
                     <p class="info-value">{{ $issue->reporter_email ?? 'samanalee@gmail.com' }}</p>
                 </div>
+                <div style="margin-bottom: 20px;">
+                    <p class="info-label">Issue Location</p>
+                    <p class="info-value">{{ $issue->location ?? 'NLH' }}</p>
+                </div>
             </div>
             <div class="col-md-6">
                 <div style="margin-bottom: 20px;">
@@ -56,6 +34,10 @@
                 <div style="margin-bottom: 20px;">
                     <p class="info-label">Date</p>
                     <p class="info-value">{{ isset($issue->created_at) ? $issue->created_at->format('d/m/Y') : '21/03/2025' }}</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <p class="info-label">Reporter's Role</p>
+                    <p class="info-value">{{ $issue->reporter_role ?? 'Student' }}</p>
                 </div>
             </div>
         </div>
@@ -80,16 +62,11 @@
         </div>
 
         <!-- Status Section -->
-        <div style="margin-bottom: 25px;">
-            <p class="info-label">Status</p>
-            <p class="info-value">{{ $issue->status ?? 'Faculty Administration' }}</p>
-        </div>
-
-        <!-- Action Form -->
         <form action="{{ isset($issue->id) ? route('issues.update', $issue->id) : '#' }}" method="POST">
             @csrf
             @method('PUT')
-            <div class="dropdown" style="display: inline-block;">
+            <p class="info-label">Issue Status</p>
+            <div class="dropdown" style="display: inline-block; margin-bottom: 15px;">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 120px; border-color: #6c757d;">
                     Click Here
                 </button>
@@ -100,7 +77,8 @@
                     <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
                 </div>
             </div>
-            <button type="submit" style="background-color: #e67e22; color: white; border: none; padding: 8px 24px; margin-left: 15px; border-radius: 4px; font-weight: 600;">SUBMIT</button>
+            <br>
+            <button type="submit" style="background-color: #e67e22; color: white; border: none; padding: 8px 24px; border-radius: 4px; font-weight: 600;">UPDATE</button>
         </form>
     </div>
 
