@@ -31,4 +31,9 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
+/*Issues*/
+
+//Update Issue Status
+Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus'])->name('issues.update');
+
 
