@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Issue;
 
 class IssueController extends Controller
 {
@@ -12,14 +13,22 @@ class IssueController extends Controller
     {
         // Validate the request
         $request->validate([
-            'status' => 'required|string',
+            'action' => 'required|string|in:accept,send_to_maintenance,change_request,reject',
         ]);
 
         // Find the issue by ID
         $issue = Issue::findOrFail($id);
 
+        // Map action to status
+        $statusMap = [
+            'accept' => 'accepted',
+            'send_to_maintenance' => 'maintenance',
+            'change_request' => 'change_requested',
+            'reject' => 'rejected',
+        ];
+
         // Update the issue status
-        $issue->status = $request->input('status');
+        $issue->status = $statusMap[$request->input('action')];
         $issue->save();
 
         // Redirect back with success message
