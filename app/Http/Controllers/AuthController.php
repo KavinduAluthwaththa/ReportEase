@@ -78,4 +78,10 @@ class AuthController extends Controller
         auth()->logout();
         return redirect('Login')->withSuccess('You have successfully logged out');
     }
+
+
+public function Welcome()
+    {
+        return view('welcome');
+    }
 }
