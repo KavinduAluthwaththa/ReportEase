@@ -31,4 +31,8 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
+// Forget Password - Show form
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
 
+// Forget Password - Handle submission
+Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
