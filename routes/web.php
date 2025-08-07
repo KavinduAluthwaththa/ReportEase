@@ -31,4 +31,10 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
+//recovery
+Route::get('/recovery-email-sent', function () {
+    return view('auth.recovery');
+});
+
+
 
