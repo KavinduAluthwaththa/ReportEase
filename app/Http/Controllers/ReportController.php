@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Report;
+use App\Models\PreviousReport;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -10,9 +9,17 @@ class ReportController extends Controller
     public function index()
     {
         // Fetch all reports from DB
-        $reports = Report::all();
+        $reports = PreviousReport::all();
 
-        return view('report.report', compact('reports'));
+        return view('previous-report.previousReport', compact('reports'));
     }
+
+    public function show($id)
+    {
+        $report = PreviousReport::findOrFail($id);
+        return view('previous-report.show', compact('report'));
+    }
+
+
 
 }
