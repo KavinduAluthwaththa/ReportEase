@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('./main/viewissues');
-});
+// Route::get('/', function () {
+//     return view('./main/viewissues');
+// });
 
 /*Authentication*/
 
@@ -32,3 +32,5 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
 
+//Previous Reports
+Route::get('/', [ReportController::class, 'index'])->name('report');
