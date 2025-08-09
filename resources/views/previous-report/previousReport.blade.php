@@ -2,90 +2,109 @@
 
 @section('content')
 
+
+<div class="reports-container">
+    <div class="header-container">
+        <h1 class="reports-title">Your Previous Reports</h1>
+    </div>
+
+    <table class="reports-table">
+        <thead>
+            <tr class="table-header">
+                <th style="text-align: left;">Report's ID</th>
+                <th style="text-align: left;">Title</th>
+                <th style="text-align: right;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($reports as $report)
+            <tr class="table-row">
+                <td style="text-align: left;">{{ $report->id }}</td>
+                <td>{{ $report->title }}</td>
+                <td style="text-align: right;">
+                    <a href="{{ route('report.show', $report->id) }}" class="see-more-link">SEE MORE</a>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <a class="new-issue-btn">REPORT A NEW ISSUE</a>
+
+</div>
+
 <style>
-    .heading {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 20px;
+    .reports-container {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
     }
 
-    .report-card {
-        background-color: #ffffff;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        padding: 16px;
-        margin-bottom: 16px;
-        border-radius: 6px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: box-shadow 0.2s ease-in-out;
+
+    .reports-title {
+        font-size: 34px;
+        font-weight: 550;
+        color: black;
+        margin-bottom: 35px;
+        padding-left: 15px;
     }
 
-    .report-card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    .reports-table {
+        width: 100%;
+        border-collapse: collapse;
     }
 
-    .report-info {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .report-issue-no {
-        font-weight: bold;
-        font-size: 16px;
-        color: #333;
-    }
-
-    .report-title {
+    .table-header {
+        background-color: #f5f5f5;
+        color: #B5B7C0;
+        font-weight: 400;
         font-size: 14px;
-        color: #555;
-        margin-top: 4px;
     }
 
-    .see-more-btn {
-        background-color: #000000;
+    .reports-table th {
+        padding: 12px 15px;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table-row {
+        border-bottom: 1px solid #eee;
+    }
+
+    .table-row:hover {
+        background-color: #f9f9f9;
+    }
+
+    .reports-table td {
+        padding: 12px 15px;
+    }
+
+    .see-more-link {
         color: #ffffff;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
         text-decoration: none;
+        padding: 8px 16px;
+        background-color: #000000;
+        border-radius: 4px;
+        display: inline-block;
         font-size: 14px;
-        transition: background-color 0.2s ease-in-out;
     }
 
-    .see-more-btn:hover {
+    .see-more-link:hover {
         background-color: #333333;
     }
 
     .new-issue-btn {
-        background-color: orange;
+        background-color: #FE5B16;
         color: white;
-        font-weight: bold;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 6px;
-        margin-top: 24px;
-        cursor: pointer;
-        transition: background-color 0.2s ease-in-out;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 300;
+        margin-top: 35px;
+        margin-left: 15px;
+        display: inline-block;
     }
 
-    .new-issue-btn:hover {
-        background-color: darkorange;
-    }
 </style>
-
-<h2 class="heading">Your Previous Reports</h2>
-
-@foreach($reports as $report)
-    <div class="report-card">
-        <div class="report-info">
-            <span class="report-issue-no">{{ $report->issue_no }}</span>
-            <span class="report-title">{{ $report->title }}</span>
-        </div>
-        <a href="{{ route('report.show', $report->id) }}" class="see-more-btn">View</a>
-    </div>
-@endforeach
-
-<button class="new-issue-btn">Report a New Issue</button>
-
 @endsection
