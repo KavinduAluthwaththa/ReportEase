@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,6 @@ Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
 //Previous Reports
 Route::get('/', [ReportController::class, 'index'])->name('report');
+
+//See more page (from Previous report page)
+Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
