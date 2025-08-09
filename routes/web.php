@@ -33,8 +33,8 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
 
+
 //Previous Reports
 Route::get('/', [ReportController::class, 'index'])->name('report');
-
 //See more page (from Previous report page)
 Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
