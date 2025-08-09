@@ -104,6 +104,7 @@
         margin-top: 35px;
         margin-left: 15px;
         display: inline-block;
+        cursor: pointer;
     }
 
 </style>
