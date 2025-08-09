@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('view-content')
+@section('content')
 <style>
     .info-label {
         color: #6c757d;
