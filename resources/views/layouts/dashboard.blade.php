@@ -40,7 +40,7 @@
 
         <main class="main-content">
             <div class="flex h-screen">
-                
+
                 <!-- Sidebar -->
                 <div class="w-1/6 bg-gray-200 p-6 border-r-2 border-r-orange-600 flex flex-col justify-between">
                     <div>
@@ -64,10 +64,18 @@
                     </div>
                 </div>
 
-                <!-- Main Content -->                
+                <!-- Main Content -->
                 <div class="w-5/6 p-10">
-                    @yield('content')
-                </div>
+                                        {{-- Posted previous reports - (user page)  --}}
+                                        @hasSection('content')
+                                            @yield('content')
+                                        @endif
+
+                                        {{-- View-specific reports - (Admin page) --}}
+                                        @hasSection('view-content')
+                                            @yield('view-content')
+                                        @endif
+                                </div>
             </div>
         </main>
     </div>
