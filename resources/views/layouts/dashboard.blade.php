@@ -66,16 +66,19 @@
 
                 <!-- Main Content -->
                 <div class="w-5/6 p-10">
-                                        {{-- Posted previous reports - (user page)  --}}
-                                        @hasSection('content')
-                                            @yield('content')
-                                        @endif
+                    {{-- previous reports page - (user)  --}}
+                    @hasSection('content')
+                        @yield('content')
+                    @endif
 
-                                        {{-- View-specific reports - (Admin page) --}}
-                                        @hasSection('view-content')
-                                            @yield('view-content')
-                                        @endif
-                                </div>
+
+                    {{-- View-specific reports - (Admin page) --}}
+                    {{--
+                    @hasSection('content')
+                        @yield('content')
+                    @endif
+                    --}}
+                </div>
             </div>
         </main>
     </div>
