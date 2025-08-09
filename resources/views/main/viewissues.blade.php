@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('content')
+@section('view-content')
 <style>
     .info-label {
         color: #6c757d;
@@ -34,7 +34,7 @@
         <h1 style="font-size: 45px; margin-bottom: 20px;">Issue No: <span class="issue-number">IS{{ $issue->id ?? 'T001' }}</span></h1>
 
         <h2 class="issue-title" style="font-size: 30px;">{{ $issue->title ?? 'Projector in the NLH is not working' }}</h2>
-        
+
         <p class="issue-description">{{ $issue->description ?? 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s' }}</p>
 
         <div class="row" style="margin-bottom: 25px;">
@@ -108,7 +108,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -116,23 +116,23 @@
         $(document).ready(function() {
             // Initialize dropdown
             $('.dropdown-toggle').dropdown();
-            
+
             // Handle dropdown item clicks
             $('.dropdown-item').click(function(e) {
                 e.preventDefault();
                 var action = $(this).attr('value');
                 var form = $(this).closest('form');
-                
+
                 // Create hidden input for the action
                 var hiddenInput = $('<input>').attr({
                     type: 'hidden',
                     name: 'action',
                     value: action
                 });
-                
+
                 // Remove any existing action input
                 form.find('input[name="action"]').remove();
-                
+
                 // Add the new action input and submit
                 form.append(hiddenInput);
                 form.submit();
