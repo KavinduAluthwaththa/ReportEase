@@ -32,9 +32,14 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
-
+// Forget Password - Show form
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
+//welcomepage
+Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
 
 //Previous Reports
 Route::get('/', [ReportController::class, 'index'])->name('report');
 //See more page (from Previous report page)
 Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
+// Forget Password - Handle submission
+Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
