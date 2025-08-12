@@ -104,3 +104,11 @@ public function showForgetPasswordForm()
         return back()->with('status', 'Password reset link sent!');
     }
 }
+
+  //routes to welcomepage
+  public function Welcome()
+    {
+        return view('welcome');
+    }
+}
+
