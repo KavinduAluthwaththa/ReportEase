@@ -103,10 +103,9 @@ public function showForgetPasswordForm()
         // This is just a placeholder. In a real application, you would send an email.
         return back()->with('status', 'Password reset link sent!');
     }
-}
 
-  //routes to welcomepage
-  public function Welcome()
+    //routes to welcomepage
+    public function Welcome()
     {
         return view('welcome');
     }
