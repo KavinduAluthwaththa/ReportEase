@@ -39,3 +39,10 @@ Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
 //Update Issue Status
 Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus'])->name('issues.update');
+// Forget Password - Show form
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
+//welcomepage
+Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
+// Forget Password - Handle submission
+Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
