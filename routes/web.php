@@ -1,4 +1,4 @@
-<![CDATA<?php
+<?php
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IssueController;
@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('./main/viewissues');
+    return view('shared.viewissues');
 });
+
+// View specific issue
+Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
 
 /*Authentication*/
 
@@ -36,5 +39,3 @@ Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
 //Update Issue Status
 Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus'])->name('issues.update');
-
-
