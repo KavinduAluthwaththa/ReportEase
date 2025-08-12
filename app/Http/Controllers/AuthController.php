@@ -38,6 +38,23 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+
+
+
+
+
+    // Show forget password form
+public function showForgetPasswordForm()
+{
+    return view('auth.forgetpassword');
+}
+
+
+
+
+
+
+
     //validating registration
     public function RegisterCustom(Request $request)
     {
@@ -72,16 +89,26 @@ class AuthController extends Controller
         ]);
     }
 
-    //login function
+    //logout function
     public function Logout()
     {
         auth()->logout();
         return redirect('Login')->withSuccess('You have successfully logged out');
     }
 
+    //send reset link
+    public function sendResetLinkEmail(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        // This is just a placeholder. In a real application, you would send an email.
+        return back()->with('status', 'Password reset link sent!');
+    }
+}
 
-public function Welcome()
+  //routes to welcomepage
+  public function Welcome()
     {
         return view('welcome');
     }
 }
+
