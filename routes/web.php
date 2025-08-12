@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('./main/viewissues');
-});
+// Route::get('/', function () {
+//     return view('./main/viewissues');
+// });
 
 /*Authentication*/
 
@@ -36,6 +37,9 @@ Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']
 //welcomepage
 Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
 
-
+//Previous Reports
+Route::get('/', [ReportController::class, 'index'])->name('report');
+//See more page (from Previous report page)
+Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
 // Forget Password - Handle submission
 Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
