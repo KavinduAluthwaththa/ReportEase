@@ -78,7 +78,7 @@
                 </div>
             </div>
             <br>
-            <button type="submit" class="submit-button">UPDATE</button>
+            <button type="submit" class="submit-button ">UPDATE</button>
         </form>
     </div>
 

@@ -107,6 +107,6 @@
 }
 
 .submit-button {
-    min-width: 120px;
+    width: 200px;
     padding: 8px 20px;
 }
