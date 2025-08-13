@@ -17,7 +17,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'registration_number',
+        'role',
+        'department',
+        'phone',
     ];
 
     /**
@@ -37,4 +43,37 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * The default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'role' => 'student',
+    ];
+
+    /**
+     * Get the issues reported by this user.
+     */
+    public function reportedIssues()
+    {
+        return $this->hasMany(Issue::class, 'reporter_email', 'email');
+    }
+
+    /**
+     * Check if user is admin/faculty
+     */
+    public function isAdmin()
+    {
+        return in_array($this->role, ['admin', 'faculty', 'staff']);
+    }
+
+    /**
+     * Check if user is student
+     */
+    public function isStudent()
+    {
+        return $this->role === 'student';
+    }
 }
