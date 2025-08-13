@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 Route::get('/recovery-email-sent', function () {
     return view('auth.recovery');
 });
+
 
 
 
