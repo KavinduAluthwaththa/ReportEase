@@ -39,3 +39,6 @@ Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
 
 // Forget Password - Handle submission
 Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// Password reset link sent page
+Route::get('/password/sent', [AuthController::class, 'passwordSent'])->name('password.sent');

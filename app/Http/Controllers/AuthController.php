@@ -99,16 +99,23 @@ public function showForgetPasswordForm()
     //send reset link
     public function sendResetLinkEmail(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
-        // This is just a placeholder. In a real application, you would send an email.
-        return back()->with('status', 'Password reset link sent!');
-    }
-}
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ]);
 
-  //routes to welcomepage
-  public function Welcome()
+        // This is just a placeholder. In a real application, you would send an email.
+        return redirect()->route('password.sent')->with('status', 'Password reset link sent!');
+    }
+    
+      //routes to welcomepage
+    public function Welcome()
     {
         return view('welcome');
     }
-}
 
+    public function passwordSent()
+    {
+        // NOTE: Change 'auth.passwordsent' to match the Blade file name
+        return view('auth.passwordsent');
+    }
+}
