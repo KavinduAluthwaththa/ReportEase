@@ -46,7 +46,7 @@ main {
   justify-content: center;
   align-items: center;
 }
-
+/* recovery content*/
 .recovery-content {
   text-align: center;
   color: #000;
@@ -62,6 +62,8 @@ main {
   margin-bottom: 20px;
 }
 
+/*Sybnit button style*/
+
 .submit-button {
   background-color: #f60;
   border: none;
@@ -75,3 +77,5 @@ main {
 .submit-button:hover {
   background-color: #e65c00;
 }
+
+
