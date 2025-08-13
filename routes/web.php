@@ -36,5 +36,10 @@ Route::get('/recovery-email-sent', function () {
     return view('auth.recovery');
 });
 
+//reset password
+Route::get('/reset-password/{token}', function ($token) {
+    return view('auth.passwords.reset', ['token' => $token]);
+})->name('passwords.reset');
+
 
 
