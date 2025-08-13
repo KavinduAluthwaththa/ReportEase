@@ -9,15 +9,10 @@
                         <h3>Reset your password</h3>
                         <p class="reset-description">Type in your email address to reset password</p>
                         
-                        @if (session('status'))
+                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
                             </div>
-                         
-                            <script>
-                                // Change this URL to the next page
-                                window.location.href = "/password/sent";
-                            </script>
                         @endif
 
                         @if ($errors->any())
