@@ -2,78 +2,67 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name',
+        'full_name',
         'email',
         'password',
-        'registration_number',
-        'role',
-        'department',
-        'phone',
+        'phone_number',
+        'role_id',
+        'section_id',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role_id' => 'integer',
+        'section_id' => 'integer',
     ];
 
-    /**
-     * The default values for attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        'role' => 'student',
-    ];
+    // Relationships
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
-    /**
-     * Get the issues reported by this user.
-     */
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
     public function reportedIssues()
     {
-        return $this->hasMany(Issue::class, 'reporter_email', 'email');
+        return $this->hasMany(Issue::class, 'reported_by_user_id');
     }
 
-    /**
-     * Check if user is admin/faculty
-     */
-    public function isAdmin()
+    public function assignedIssues()
     {
-        return in_array($this->role, ['admin', 'faculty', 'staff']);
+        return $this->hasMany(Issue::class, 'assigned_to_user_id');
     }
 
-    /**
-     * Check if user is student
-     */
-    public function isStudent()
+    public function updates()
     {
-        return $this->role === 'student';
+        return $this->hasMany(IssueUpdate::class);
+    }
+
+    public function upvotes()
+    {
+        return $this->hasMany(IssueUpvote::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasManyThrough(Notification::class, Notify::class, 'receiver_id', 'notific_id', 'id', 'notific_id');
     }
 }

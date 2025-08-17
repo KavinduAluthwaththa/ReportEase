@@ -2,47 +2,42 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Issue extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'title',
-        'description',
-        'reporter_name',
-        'reporter_email',
-        'user_id', // Assuming this is the ID of the user reporting the issue
-        'location',
-        'reporter_role',
-        'status',
-        'attachments',
+        'title', 'description', 'evidence', 'location', 'status',
+        'assigned_to_user_id', 'reported_by_user_id', 'reported_at', 'resolved_at', 'upVotes'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'attachments' => 'json', // If you want to store multiple attachments as JSON
+        'reported_at' => 'datetime',
+        'resolved_at' => 'datetime',
+        'upVotes' => 'integer',
     ];
 
-    /**
-     * The default values for attributes.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        'status' => 'pending',
-    ];
+    // Relationships
+    public function reporter()
+    {
+        return $this->belongsTo(User::class, 'reported_by_user_id');
+    }
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'assigned_to_user_id');
+    }
+
+    public function updates()
+    {
+        return $this->hasMany(IssueUpdate::class);
+    }
+
+    public function upvotes()
+    {
+        return $this->hasMany(IssueUpvote::class);
+    }
 }
