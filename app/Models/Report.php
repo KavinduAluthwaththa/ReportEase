@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 class Report extends Model
 {
     use HasFactory;
+    
     protected $table = 'reports';
+    
     protected $fillable = [
         'issue_no',
         'title',
@@ -21,11 +23,13 @@ class Report extends Model
         'reporter_email',
         'date',
         'attachments',
+        'status',
     ];
 
-    // If you want Laravel to automatically cast JSON fields to arrays
     protected $casts = [
-        'attachments' => 'array'
+        'attachments' => 'array',
+        'status' => 'array',
+        'date' => 'date',
     ];
 }
 
