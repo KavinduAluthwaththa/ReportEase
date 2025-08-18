@@ -9,20 +9,27 @@ class IssueUpvote extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['issue_id', 'user_id'];
+    protected $table = 'Issue_Upvote';
+    protected $primaryKey = 'upvote_id';
+    public $incrementing = false;
+
+    protected $fillable = ['upvote_id', 'issue_id', 'user_id'];
 
     protected $casts = [
-        'issue_id' => 'integer',
-        'user_id' => 'integer',
+        'upvote_id' => 'integer',
+        'issue_id' => 'string',
+        'user_id' => 'string',
     ];
+
+    public $timestamps = false;
 
     public function issue()
     {
-        return $this->belongsTo(Issue::class);
+        return $this->belongsTo(Issue::class, 'issue_id', 'issue_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 }

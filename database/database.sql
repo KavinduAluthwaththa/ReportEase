@@ -1,126 +1,90 @@
--- MySQL dump 10.13  Distrib 8.0.43, for Linux (x86_64)
---
--- Host: localhost    Database: wad_project
--- ------------------------------------------------------
--- Server version	8.0.43-0ubuntu0.24.04.1
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
--- Laravel Models SQL Schema Export
-
-CREATE TABLE roles (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    role_name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL
+CREATE TABLE `Users`(
+    `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `full_name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `phone_number` INT NOT NULL,
+    `ID` VARCHAR(255) NOT NULL COMMENT 'student registration ID or employee ID likewise',
+    `role_id` INT NOT NULL,
+    `section_id` INT NULL,
+    `created_at` TIMESTAMP NOT NULL
 );
-
-CREATE TABLE sections (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    section_name VARCHAR(255) NOT NULL,
-    description TEXT NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL
+ALTER TABLE
+    `Users` ADD UNIQUE `users_email_unique`(`email`);
+ALTER TABLE
+    `Users` ADD UNIQUE `users_phone_number_unique`(`phone_number`);
+ALTER TABLE
+    `Users` ADD UNIQUE `users_id_unique`(`ID`);
+CREATE TABLE `Issues`(
+    `issue_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `evidence` BLOB NOT NULL,
+    `location` VARCHAR(255) NOT NULL,
+    `status` VARCHAR(255) NOT NULL,
+    `assigned_to_user_id` INT NULL,
+    `reported_by_user_id` INT NOT NULL,
+    `reported_at` TIMESTAMP NOT NULL,
+    `resolved_at` TIMESTAMP NULL,
+    `upVotes` INT NULL
 );
-
-CREATE TABLE users (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    email_verified_at TIMESTAMP NULL,
-    password VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(255) NULL,
-    role_id BIGINT UNSIGNED NULL,
-    section_id BIGINT UNSIGNED NULL,
-    remember_token VARCHAR(100) NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL,
-    FOREIGN KEY (role_id) REFERENCES roles(id),
-    FOREIGN KEY (section_id) REFERENCES sections(id)
+CREATE TABLE `Roles`(
+    `role_id` INT UNSIGNED NOT NULL,
+    `role_name` VARCHAR(255) NOT NULL,
+    PRIMARY KEY(`role_id`)
 );
-
-CREATE TABLE issues (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    evidence TEXT NULL,
-    location VARCHAR(255) NOT NULL,
-    status ENUM('open','in_progress','resolved','closed') DEFAULT 'open',
-    assigned_to_user_id BIGINT UNSIGNED NULL,
-    reported_by_user_id BIGINT UNSIGNED NOT NULL,
-    reported_at TIMESTAMP NULL,
-    resolved_at TIMESTAMP NULL,
-    upVotes INT DEFAULT 0,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL,
-    FOREIGN KEY (assigned_to_user_id) REFERENCES users(id),
-    FOREIGN KEY (reported_by_user_id) REFERENCES users(id)
+CREATE TABLE `Section`(
+    `section_id` INT UNSIGNED NOT NULL,
+    `section_name` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    PRIMARY KEY(`section_id`)
 );
-
-CREATE TABLE issue_updates (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    issue_id BIGINT UNSIGNED NOT NULL,
-    user_id BIGINT UNSIGNED NOT NULL,
-    comment TEXT NOT NULL,
-    new_status VARCHAR(255) NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL,
-    FOREIGN KEY (issue_id) REFERENCES issues(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+CREATE TABLE `Issue_Updates`(
+    `update_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `issue_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `comment` TEXT NOT NULL,
+    `new_status` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP NOT NULL
 );
-
-CREATE TABLE issue_upvotes (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    issue_id BIGINT UNSIGNED NOT NULL,
-    user_id BIGINT UNSIGNED NOT NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL,
-    UNIQUE KEY unique_upvote (issue_id, user_id),
-    FOREIGN KEY (issue_id) REFERENCES issues(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+CREATE TABLE `Issue_Upvote`(
+    `upvote_id` INT NOT NULL,
+    `issue_id` VARCHAR(255) NOT NULL,
+    `user_id` VARCHAR(255) NOT NULL,
+    PRIMARY KEY(`upvote_id`)
 );
-
-CREATE TABLE notifications (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    notific_type VARCHAR(255) NOT NULL,
-    notific_head VARCHAR(255) NOT NULL,
-    notific_body TEXT NOT NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL
+CREATE TABLE `Notifications`(
+    `notific_id` INT NOT NULL,
+    `notific_type` VARCHAR(255) NOT NULL COMMENT 'e.g: \'ISSUE_ASSIGNED\', \'STATUS_UPDATED\' , \'Announcement\'',
+    `notific_head` VARCHAR(255) NOT NULL,
+    `notific_body` TEXT NULL,
+    PRIMARY KEY(`notific_id`)
 );
-
-CREATE TABLE notify (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    notific_id BIGINT UNSIGNED NOT NULL,
-    receiver_id BIGINT UNSIGNED NOT NULL,
-    notific_sent_time TIMESTAMP NULL,
-    notific_seen_time TIMESTAMP NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL,
-    FOREIGN KEY (notific_id) REFERENCES notifications(id) ON DELETE CASCADE,
-    FOREIGN KEY (receiver_id) REFERENCES users(id)
+CREATE TABLE `Notify`(
+    `notific_log` INT NOT NULL,
+    `notific_id` INT NOT NULL,
+    `receiver_id` INT NOT NULL,
+    `notific_sent_time` TIMESTAMP NOT NULL,
+    `notific_seen_time` TIMESTAMP NULL,
+    PRIMARY KEY(`notific_log`)
 );
-
-CREATE TABLE reports (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    issue_no VARCHAR(255) NOT NULL UNIQUE,
-    title VARCHAR(255) NOT NULL,
-    description TEXT NULL,
-    reporter_name VARCHAR(255) NOT NULL,
-    index_no VARCHAR(255) NOT NULL,
-    reporter_email VARCHAR(255) NOT NULL,
-    date DATE NOT NULL,
-    attachments JSON NULL,
-    status JSON NULL,
-    created_at TIMESTAMP NULL,
-    updated_at TIMESTAMP NULL
-);
+ALTER TABLE
+    `Issues` ADD CONSTRAINT `issues_assigned_to_user_id_foreign` FOREIGN KEY(`assigned_to_user_id`) REFERENCES `Users`(`user_id`);
+ALTER TABLE
+    `Issue_Updates` ADD CONSTRAINT `issue_updates_issue_id_foreign` FOREIGN KEY(`issue_id`) REFERENCES `Issues`(`issue_id`);
+ALTER TABLE
+    `Users` ADD CONSTRAINT `users_section_id_foreign` FOREIGN KEY(`section_id`) REFERENCES `Section`(`section_id`);
+ALTER TABLE
+    `Issues` ADD CONSTRAINT `issues_reported_by_user_id_foreign` FOREIGN KEY(`reported_by_user_id`) REFERENCES `Users`(`user_id`);
+ALTER TABLE
+    `Notify` ADD CONSTRAINT `notify_notific_id_foreign` FOREIGN KEY(`notific_id`) REFERENCES `Notifications`(`notific_id`);
+ALTER TABLE
+    `Notify` ADD CONSTRAINT `notify_receiver_id_foreign` FOREIGN KEY(`receiver_id`) REFERENCES `Users`(`user_id`);
+ALTER TABLE
+    `Issue_Upvote` ADD CONSTRAINT `issue_upvote_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `Users`(`user_id`);
+ALTER TABLE
+    `Issue_Updates` ADD CONSTRAINT `issue_updates_user_id_foreign` FOREIGN KEY(`user_id`) REFERENCES `Users`(`user_id`);
+ALTER TABLE
+    `Users` ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY(`role_id`) REFERENCES `Roles`(`role_id`);
+ALTER TABLE
+    `Issue_Upvote` ADD CONSTRAINT `issue_upvote_issue_id_foreign` FOREIGN KEY(`issue_id`) REFERENCES `Issues`(`issue_id`);
