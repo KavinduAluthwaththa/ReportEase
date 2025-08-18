@@ -3,7 +3,7 @@
 @section('content')
     <div class="w-5/6 p-10">
         <div class="flex items-center justify-center">
-            <h1 class="text-3xl font-bold">Welcome, <span style="color: #e67e22;">Samanalee!</span></h1>
+            <h1 class="text-3xl font-bold">Welcome, <span style="color: #e67e22;">{{ $student && $student->name ? $student->name : 'Student' }}!</span></h1>
         </div>
 
         <div class="mt-10 text-center">

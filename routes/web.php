@@ -1,7 +1,8 @@
-<![CDATA<?php
+<?php
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +31,13 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+
+// ...existing code...
+// ...existing code...
+
+// For frontend testing only
+Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.dashboard');
+
+
 
 
