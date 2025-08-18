@@ -2,6 +2,7 @@
 
 @section('auth_content')
     <div class="reset-password-content">
+        
         <h2 class="text-2xl mb-2 text-left">Reset your password</h2>
         <p class="text-left text-gray-700 mb-6">
             Type in your new password
