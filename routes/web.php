@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IssueController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
@@ -16,8 +17,11 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
-    return view('./main/viewissues');
+    return view('shared.viewissues');
 });
+
+// View specific issue
+Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
 
 /*Authentication*/
 
@@ -32,12 +36,6 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
-// ...existing code...
-// ...existing code...
-
 // For frontend testing only
 Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.dashboard');
-
-
-
 
