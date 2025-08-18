@@ -9,10 +9,20 @@ class Section extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['section_name', 'description'];
+    protected $table = 'Section';
+    protected $primaryKey = 'section_id';
+    public $incrementing = false;
+
+    protected $fillable = ['section_id', 'section_name', 'description'];
+
+    protected $casts = [
+        'section_id' => 'integer',
+    ];
+
+    public $timestamps = false;
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'section_id', 'section_id');
     }
 }
