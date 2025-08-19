@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IssueController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +53,13 @@ Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show
 
 // Forget Password - Handle submission
 Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
+//recovery
+Route::get('/recovery-email-sent', function () {
+    return view('auth.recovery');
+});
+
+
+
+
 
