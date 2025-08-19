@@ -16,9 +16,6 @@ use App\Http\Controllers\ReportController;
 |
 */
 
-Route::get('/', function () {
-    return view('shared.viewissues');
-});
 
 // View specific issue
 Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
@@ -43,14 +40,13 @@ Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus']
 // Forget Password - Show form
 Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
 //welcomepage
-Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
+Route::get('/', [AuthController::class, 'Welcome'])->name('welcome');
 
 //Previous Reports
-Route::get('/', [ReportController::class, 'index'])->name('report');
+Route::get('/reports', [ReportController::class, 'index'])->name('report');
 
 //See more page (from Previous report page)
 Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
 
 // Forget Password - Handle submission
 Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
-
