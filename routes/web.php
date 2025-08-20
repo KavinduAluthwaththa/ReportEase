@@ -1,7 +1,9 @@
-<![CDATA<?php
+<?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IssueController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('./main/viewissues');
-});
+
+// View specific issue
+Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
 
 /*Authentication*/
 
@@ -30,6 +32,24 @@ Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name(
 
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+
+/*Issues*/
+
+//Update Issue Status
+Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus'])->name('issues.update');
+// Forget Password - Show form
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
+//welcomepage
+Route::get('/', [AuthController::class, 'Welcome'])->name('welcome');
+
+//Previous Reports
+Route::get('/reports', [ReportController::class, 'index'])->name('report');
+
+//See more page (from Previous report page)
+Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
+
+// Forget Password - Handle submission
+Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 
 //recovery
 Route::get('/recovery-email-sent', function () {
@@ -47,5 +67,4 @@ Route::post('/reset-password', function (Illuminate\Http\Request $request) {
     // For now, just return a simple response or redirect
     return redirect('/login')->with('status', 'Password has been reset!');
 })->name('password.update');
-
 
