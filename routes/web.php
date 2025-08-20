@@ -56,3 +56,15 @@ Route::get('/recovery-email-sent', function () {
     return view('auth.recovery');
 });
 
+//reset password
+Route::get('/reset-password/{token}', function ($token) {
+    return view('auth.passwords.reset', ['token' => $token]);
+})->name('passwords.reset');
+
+// Add this POST route for password update
+Route::post('/reset-password', function (Illuminate\Http\Request $request) {
+    // Here you should add password reset logic
+    // For now, just return a simple response or redirect
+    return redirect('/login')->with('status', 'Password has been reset!');
+})->name('password.update');
+
