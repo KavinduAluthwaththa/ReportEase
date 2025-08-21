@@ -9,23 +9,29 @@ class Notify extends Model
 {
     use HasFactory;
 
-    protected $table = 'notify';
-    protected $fillable = ['notific_id', 'receiver_id', 'notific_sent_time', 'notific_seen_time'];
+    protected $table = 'Notify';
+    protected $primaryKey = 'notific_log';
+    public $incrementing = false;
+
+    protected $fillable = ['notific_log', 'notific_id', 'receiver_id', 'notific_sent_time', 'notific_seen_time'];
 
     protected $casts = [
+        'notific_log' => 'integer',
         'notific_id' => 'integer',
         'receiver_id' => 'integer',
         'notific_sent_time' => 'datetime',
         'notific_seen_time' => 'datetime',
     ];
 
+    public $timestamps = false;
+
     public function notification()
     {
-        return $this->belongsTo(Notification::class, 'notific_id');
+        return $this->belongsTo(Notification::class, 'notific_id', 'notific_id');
     }
 
     public function receiver()
     {
-        return $this->belongsTo(User::class, 'receiver_id');
+        return $this->belongsTo(User::class, 'receiver_id', 'user_id');
     }
 }
