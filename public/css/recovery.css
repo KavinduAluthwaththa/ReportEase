@@ -72,6 +72,7 @@ main {
   cursor: pointer;
   font-weight: bold;
   border-radius: 4px;
+  width: 80px;
 }
 
 .submit-button:hover {
