@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IssueController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -68,3 +69,5 @@ Route::post('/reset-password', function (Illuminate\Http\Request $request) {
     return redirect('/login')->with('status', 'Password has been reset!');
 })->name('password.update');
 
+// Student Dashboard
+Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.studash');
