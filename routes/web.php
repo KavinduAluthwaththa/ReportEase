@@ -56,15 +56,20 @@ Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show
 // Forget Password - Handle submission
 Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 
-//recovery
+//recovery --- Harishian
 Route::get('/recovery-email-sent', function () {
     return view('auth.recovery');
 });
 
-//reset password
+//reset password --- Pasindi
 Route::get('/reset-password/{token}', function ($token) {
     return view('auth.passwords.reset', ['token' => $token]);
 })->name('passwords.reset');
+
+// Development route for direct access to reset password page
+Route::get('/reset-password-dev', function () {
+    return view('auth.passwords.reset', ['token' => null]);
+})->name('password.reset.dev');
 
 // Add this POST route for password update
 Route::post('/reset-password', function (Illuminate\Http\Request $request) {
@@ -73,5 +78,5 @@ Route::post('/reset-password', function (Illuminate\Http\Request $request) {
     return redirect('/login')->with('status', 'Password has been reset!');
 })->name('password.update');
 
-// Student Dashboard
+// Student Dashboard --- Kaveeshi
 Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.studash');
