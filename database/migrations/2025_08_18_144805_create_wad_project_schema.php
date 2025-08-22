@@ -15,13 +15,13 @@ class CreateWadProjectSchema extends Migration
     {
         // Create Roles table first (referenced by Users)
         Schema::create('Roles', function (Blueprint $table) {
-            $table->unsignedInteger('role_id')->primary();
+            $table->increments('role_id');
             $table->string('role_name');
         });
 
         // Create Section table (referenced by Users)
         Schema::create('Section', function (Blueprint $table) {
-            $table->unsignedInteger('section_id')->primary();
+            $table->increments('section_id');
             $table->string('section_name');
             $table->text('description');
         });
