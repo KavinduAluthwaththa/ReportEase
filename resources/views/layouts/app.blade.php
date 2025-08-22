@@ -36,7 +36,6 @@
                 @endauth
             </nav>
         </header>
-
         <main class="main-content">
             @yield('content')
         </main>

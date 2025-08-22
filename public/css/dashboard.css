@@ -8,7 +8,7 @@
 /* Sidebar */
 .sidebar {
     width: 220px;
-    background: #e2e2e2;
+    background: #eaeaea;
     border-right: 2px solid #ff6600;
     display: flex;
     flex-direction: column;
@@ -38,15 +38,16 @@
     font-weight: 500;
 }
 
-.sidebar ul li.active a {
+.sidebar .nav-text{
     color: #ff6600;
-    font-weight: bold;
+    font-weight: 600;
 }
+
 
 .sidebar .logout {
     margin-top: auto;
     text-decoration: none;
-    color: red;
+    color: #ff0000;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -55,6 +56,7 @@
 .main-content {
     flex: 1;
     background: #fff;
+    padding: 20px;
 }
 
 /* Header */
@@ -79,12 +81,13 @@
 /* Welcome Section */
 .welcome-section {
     text-align: center;
-    margin-top: 50px;
+    padding-top: 50px;
 }
 
 .welcome-section h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
 }
 
 .welcome-section .highlight {
@@ -94,25 +97,28 @@
 /* Profile Card */
 .profile-card {
     display: inline-block;
-    background: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 30px;
+    background-color: #f3f4f6;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    margin-bottom: 2rem;
 }
 
 .profile-card img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+    margin: 0 auto 1rem;
 }
 
 .profile-card h3 {
-    margin: 10px 0 5px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
 }
 
 .profile-card p {
-    color: #666;
-    font-size: 14px;
+    color: #6b7280;
 }
 
 /* Buttons */
@@ -129,6 +135,8 @@
     text-decoration: none;
     font-weight: bold;
     transition: 0.3s;
+    border: none;
+    cursor: pointer;
 }
 
 .btn-primary {
@@ -141,18 +149,21 @@
 }
 
 .btn-secondary {
-    background: #444;
+    background: #ff6600;
     color: #fff;
 }
 
 .btn-secondary:hover {
-    background: #222;
+    background: #e65c00;
 }
 
-.action-buttons {
+.nav-link {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
+    align-items: center;
+    gap: 10px;
 }
 
+.nav-icon {
+    width: 20px;
+    height: 20px;
+}
