@@ -31,6 +31,10 @@ Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login
 Route::get('/register', [AuthController::class, 'Register'])->name('register'); /*View Register*/
 Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom'); /*Register Function*/
 
+//register2
+Route::get('/register2', [AuthController::class, 'Register2'])->name('register2'); /*View Register2*/
+Route::post('/register2-custom',[AuthController::class, 'Register2Custom'])->name('register2.custom'); /*Register2 Function*/
+
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
 
