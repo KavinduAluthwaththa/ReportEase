@@ -14,7 +14,6 @@ class DashboardController extends Controller
             'avatar' => '/images/user.png', // replace with your default avatar path
         ];
 
-        return view('student.dashboard', compact('student'));
+        return view('student.studash', compact('student'));
     }
 }
-
