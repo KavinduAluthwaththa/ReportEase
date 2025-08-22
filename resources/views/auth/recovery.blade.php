@@ -1,12 +1,12 @@
-@extends('layouts.auth')
+@extends('layouts.guest')
 
-@section('auth_content')
-    <div class="recovery-content">
-        <h2 class="text-2xl mb-4 text-left">Recovery Email Sent!</h2>
-        <p class="text-left text-gray-700 mb-6">
+@section('content')
+    <div class="main-wrapper-reset">
+        <h2 class="reset-password-content-left-align">Recovery Email Sent!</h2>
+        <p class="reset-password-content-left-align">
             Please check your email for the next steps to reset your password.
         </p>
-        <div class="text-left">
+        <div>
             <a href="{{ route('login') }}">
                 <button class="submit-button">
                     OKAY

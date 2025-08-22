@@ -1,26 +1,28 @@
-@extends('layouts.auth')
+@extends('layouts.guest')
 
-@section('auth_content')
-    <div class="reset-password-content">
+@section('content')
+    <div class="main-wrapper-reset">
         
-        <h2 class="text-2xl mb-2 text-left">Reset your password</h2>
-        <p class="text-left text-gray-700 mb-6">
+        <h2 class="reset-password-content-left-align">Reset your password</h2>
+        <p class="reset-password-content-left-align">
             Type in your new password
         </p>
 
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
-            <input type="hidden" name="token" value="{{ $token }}">
+            @if ($token)
+                <input type="hidden" name="token" value="{{ $token }}">
+            @endif
 
             <div class="form-group">
-                <input type="password" name="password" placeholder="New password *" required>
+                <input type="password" class="form-control" name="password" placeholder="New password *" required>
             </div>
 
             <div class="form-group">
-                <input type="password" name="password_confirmation" placeholder="Confirm password *" required>
+                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm password *" required>
             </div>
 
-            <button type="submit" class="submit-button">
+            <button type="submit" class="submit-button submit-button-full-width">
                 RESET PASSWORD
             </button>
         </form>
