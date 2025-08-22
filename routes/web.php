@@ -81,3 +81,61 @@ Route::post('/reset-password', function (Illuminate\Http\Request $request) {
 
 // Student Dashboard --- Kaveeshi
 Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.studash');
+
+// Faculty Staff Dashboard
+Route::get('/facultystaff/dashboard', function () {
+    return view('facultystaff.fsdash');
+})->name('facultystaff.dashboard');
+
+// Main View Issues
+Route::get('/main/viewissues', function () {
+    $issue = (object)[
+        'id' => 'T001',
+        'title' => 'Projector in the NLH is not working',
+        'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
+        'reporter_name' => 'Samanalee Fernando',
+        'reporter_email' => 'samanalee@gmail.com',
+        'student_id' => '21CIS004',
+        'created_at' => now(),
+        'status' => 'Faculty Administration',
+        'location' => 'NLH',
+        'reporter_role' => 'Student'
+    ];
+    return view('main.viewissues', compact('issue'));
+})->name('main.viewissues');
+
+// Issues Index
+Route::get('/issues/all', function () {
+    return view('issues.index');
+})->name('issues.all');
+
+// Maintenance Department Dashboard
+Route::get('/maintenancedep/dashboard', function () {
+    return view('maintenancedep.maintenancedepdash');
+})->name('maintenancedep.dashboard');
+
+// Previous Reports
+Route::get('/previous-reports', function () {
+    $reports = [
+        (object)['id' => 1, 'title' => 'Report 1'],
+        (object)['id' => 2, 'title' => 'Report 2'],
+    ];
+    return view('previous-report.previousReport', compact('reports'));
+})->name('previous.reports');
+
+// Shared View Issues
+Route::get('/shared/viewissues', function () {
+    $issue = (object)[
+        'id' => 'T001',
+        'title' => 'Projector in the NLH is not working',
+        'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
+        'reporter_name' => 'Samanalee Fernando',
+        'reporter_email' => 'samanalee@gmail.com',
+        'student_id' => '21CIS004',
+        'created_at' => now(),
+        'status' => 'Faculty Administration',
+        'location' => 'NLH',
+        'reporter_role' => 'Student'
+    ];
+    return view('shared.viewissues', compact('issue'));
+})->name('shared.viewissues');

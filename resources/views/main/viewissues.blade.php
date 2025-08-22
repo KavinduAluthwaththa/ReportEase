@@ -1,59 +1,31 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<style>
-    .info-label {
-        color: #6c757d;
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 2px;
-    }
-    .info-value {
-        color: #333;
-        margin-bottom: 15px;
-        font-size: 20px;
-    }
-    .issue-number {
-        color: #e67e22;
-        font-weight: bold;
-    }
-    .issue-title {
-        color: #333;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-    .issue-description {
-        font-size: 20px;
-        color: #6c757d;
-        line-height: 1.5;
-        margin-bottom: 25px;
-    }
-</style>
+    <link rel="stylesheet" href="{{ asset('css/main-viewissues.css') }}">
+    <div class="issue-container">
+        <h1 class="issue-header">Issue No: <span class="issue-number">IS{{ $issue->id ?? 'T001' }}</span></h1>
 
-    <div class="w-5/6 p-10">
-        <h1 style="font-size: 45px; margin-bottom: 20px;">Issue No: <span class="issue-number">IS{{ $issue->id ?? 'T001' }}</span></h1>
-
-        <h2 class="issue-title" style="font-size: 30px;">{{ $issue->title ?? 'Projector in the NLH is not working' }}</h2>
+        <h2 class="issue-title-main issue-title-secondary">{{ $issue->title ?? 'Projector in the NLH is not working' }}</h2>
 
         <p class="issue-description">{{ $issue->description ?? 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s' }}</p>
 
-        <div class="row" style="margin-bottom: 25px;">
+        <div class="row info-section">
             <div class="col-md-6">
-                <div style="margin-bottom: 20px;">
+                <div class="info-item">
                     <p class="info-label">Reporter's Name</p>
                     <p class="info-value">{{ $issue->reporter_name ?? 'Samanalee Fernando' }}</p>
                 </div>
-                <div style="margin-bottom: 20px;">
+                <div class="info-item">
                     <p class="info-label">Reporter's email</p>
                     <p class="info-value">{{ $issue->reporter_email ?? 'samanalee@gmail.com' }}</p>
                 </div>
             </div>
             <div class="col-md-6">
-                <div style="margin-bottom: 20px;">
+                <div class="info-item">
                     <p class="info-label">Index</p>
                     <p class="info-value">{{ $issue->student_id ?? '21CIS004' }}</p>
                 </div>
-                <div style="margin-bottom: 20px;">
+                <div class="info-item">
                     <p class="info-label">Date</p>
                     <p class="info-value">{{ isset($issue->created_at) ? $issue->created_at->format('d/m/Y') : '21/03/2025' }}</p>
                 </div>
@@ -61,26 +33,26 @@
         </div>
 
         <!-- Attachments Section -->
-        <div style="margin-bottom: 25px;">
+        <div class="attachments-section">
             <p class="info-label">Attachments</p>
-            <div style="display: flex; gap: 15px;">
-                <div style="text-align: center;">
-                    <div style="width: 100px; height: 80px; background: linear-gradient(45deg, #00d4aa, #00a8ff); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
-                        <i class="fas fa-image" style="color: white; font-size: 20px;"></i>
+            <div class="attachment-thumbnails">
+                <div class="attachment-item">
+                    <div class="attachment-thumbnail gradient-1">
+                        <i class="fas fa-image attachment-icon"></i>
                     </div>
-                    <small style="color: #6c757d; font-size: 11px;">sts.jpg</small>
+                    <small class="attachment-filename">sts.jpg</small>
                 </div>
-                <div style="text-align: center;">
-                    <div style="width: 100px; height: 80px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
-                        <i class="fas fa-image" style="color: white; font-size: 20px;"></i>
+                <div class="attachment-item">
+                    <div class="attachment-thumbnail gradient-2">
+                        <i class="fas fa-image attachment-icon"></i>
                     </div>
-                    <small style="color: #6c757d; font-size: 11px;">sts2.jpg</small>
+                    <small class="attachment-filename">sts2.jpg</small>
                 </div>
             </div>
         </div>
 
         <!-- Status Section -->
-        <div style="margin-bottom: 25px;">
+        <div class="status-section">
             <p class="info-label">Status</p>
             <p class="info-value">{{ $issue->status ?? 'Faculty Administration' }}</p>
         </div>
@@ -89,8 +61,8 @@
         <form action="{{ isset($issue->id) ? route('issues.update', $issue->id) : '#' }}" method="POST">
             @csrf
             @method('PUT')
-            <div class="dropdown" style="display: inline-block;">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="min-width: 120px; border-color: #6c757d;">
+            <div class="dropdown action-dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Click Here
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -100,7 +72,7 @@
                     <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
                 </div>
             </div>
-            <button type="submit" style="background-color: #e67e22; color: white; border: none; padding: 8px 24px; margin-left: 15px; border-radius: 4px; font-weight: 600;">SUBMIT</button>
+            <button type="submit" class="submit-action-button">SUBMIT</button>
         </form>
     </div>
 
@@ -140,4 +112,3 @@
         });
     </script>
 @stop
-
