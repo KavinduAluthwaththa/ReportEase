@@ -13,7 +13,7 @@ class IssueController extends Controller
     {
         try {
             // Find the issue with relationships loaded
-            $issue = Issue::with(['reporter.role', 'reporter.section', 'assignee.role'])
+            $issue = Issue::with(['user.role', 'user.section', 'assignee.role'])
                           ->where('issue_id', $id)
                           ->firstOrFail();
             

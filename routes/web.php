@@ -45,9 +45,6 @@ Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm']
 //welcomepage
 Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
 
-//Previous Reports
-Route::get('/', [ReportController::class, 'index'])->name('report');
-
 //See more page (from Previous report page)
 Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
 
