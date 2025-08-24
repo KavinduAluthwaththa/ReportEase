@@ -15,29 +15,29 @@
             <div class="col-md-6">
                 <div class="info-item">
                     <p class="info-label">Reporter's Name</p>
-                    <p class="info-value">{{ $issue->reporter_name ?? 'Samanalee Fernando' }}</p>
+                    <p class="info-value">{{ $issue-> user->full_name }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Reporter's email</p>
-                    <p class="info-value">{{ $issue->reporter_email ?? 'samanalee@gmail.com' }}</p>
+                    <p class="info-value">{{ $issue->user->email }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Issue Location</p>
-                    <p class="info-value">{{ $issue->location ?? 'NLH' }}</p>
+                    <p class="info-value">{{ $issue->location }}</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="info-item">
                     <p class="info-label">Index</p>
-                    <p class="info-value">{{ $issue->student_id ?? '21CIS004' }}</p>
+                    <p class="info-value">{{ $issue->user->ID }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Date</p>
-                    <p class="info-value">{{ isset($issue->created_at) ? $issue->created_at->format('d/m/Y') : '21/03/2025' }}</p>
+                    <p class="info-value">{{ isset($issue->reported_at) ? $issue->reported_at->format('d/m/Y') : '21/03/2025' }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Reporter's Role</p>
-                    <p class="info-value">{{ $issue->reporter_role ?? 'Student' }}</p>
+                    <p class="info-value">{{ $issue->user->role ->role_name }}</p>
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
         </div>
 
         <!-- Status Section -->
-        <form action="{{ isset($issue->id) ? route('issues.update', $issue->id) : '#' }}" method="POST">
+        <form action="{{ isset($issue->issue_id) ? route('issue.status', $issue->issue_id) : '#' }}" method="POST">
             @csrf
             @method('PUT')
             <p class="info-label">Issue Status</p>
