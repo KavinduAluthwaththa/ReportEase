@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body>
     <header class="auth-header bg-gray-800 text-white p-4 flex justify-between items-center">
         <div class="flex items-center">
