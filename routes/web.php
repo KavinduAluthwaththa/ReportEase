@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IssueController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,38 +16,59 @@ use App\Http\Controllers\ReportController;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+// Home page - redirects to issues view
 Route::get('/', function () {
     return view('shared.viewissues');
-});
+})->name('home');
+
+// Welcome page
+Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
+
+// Login routes
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login-custom', [AuthController::class, 'LoginCustom'])->name('login.custom');
+
+// Register routes
+Route::get('/register', [AuthController::class, 'Register'])->name('register');
+Route::post('/register-custom', [AuthController::class, 'RegisterCustom'])->name('register.custom');
+
+// Logout route
+Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+
+// Password reset routes
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
+Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
+/*
+|--------------------------------------------------------------------------
+| Issue Management Routes
+|--------------------------------------------------------------------------
+*/
 
 // View specific issue
 Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
 
-/*Authentication*/
-
-//Login
-Route::get('/login', [AuthController::class, 'login'])->name('login'); /*View Login*/
-Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom'); /*Login Function*/
-
-//register
-Route::get('/register', [AuthController::class, 'Register'])->name('register'); /*View Register*/
-Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom'); /*Register Function*/
-
-//logout
-Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
-
-/*Issues*/
-
-//Update Issue Status
+// Update issue status
 Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus'])->name('issues.update');
-// Forget Password - Show form
-Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
-//welcomepage
-Route::get('/welcome', [AuthController::class, 'Welcome'])->name('welcome');
 
-//See more page (from Previous report page)
+/*
+|--------------------------------------------------------------------------
+| Report Routes
+|--------------------------------------------------------------------------
+*/
+
+// View specific report details
 Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
-
-// Forget Password - Handle submission
-Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 
