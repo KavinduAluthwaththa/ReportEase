@@ -52,7 +52,7 @@ body {
 .auth-left {
     width: 55%;
     min-width: 415px;
-    padding: 40px;
+    padding: 0 40px;
     display: flex;
     justify-content: center;
 }

@@ -41,7 +41,7 @@ body {
 /* Main Content Styles */
 .auth-main {
     display: flex;
-    min-height: calc(100vh - 80px); /* Adjust height to account for header */
+    min-height: 100vh; /* Full viewport height */
     width: 100%; /* Ensure it takes full width */
     background-color: #fff;
 }
@@ -49,12 +49,12 @@ body {
 /* Left Side (Form) */
 .auth-left {
     width: 40%; /* Fixed width for the left side */
-    padding: 60px 40px; /* Increase padding for better spacing */
+    padding: 0 40px; /* Remove top and bottom padding */
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-radius: 8px; /* Apply border-radius to the left side */
-    margin: 20px; /* Add margin to center the form block */
+    margin: 0; /* Remove margin to eliminate gaps */
     max-width: 450px; /* Limit max width of the form block */
 }
 

@@ -1,6 +1,7 @@
 @extends('layouts.auth')
 
 @section('auth_content')
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
     <div class="auth-left">
         <div class="login-form">
             <h2>Sign up to <span style="color: #e67e22;">ReportEase</span></h2>
@@ -54,4 +55,5 @@
             </div>
         </div>
     </div>
+    
 @endsection
