@@ -18,68 +18,62 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
-// View specific issue
-Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
-
-/*Authentication*/
-
-//Login
-Route::get('/login', [AuthController::class, 'login'])->name('login'); /*View Login*/
-Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login.custom'); /*Login Function*/
-
-//register
-Route::get('/register', [AuthController::class, 'Register'])->name('register'); /*View Register*/
-Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom'); /*Register Function*/
-
-//register2
-Route::get('/register2', [AuthController::class, 'Register2'])->name('register2'); /*View Register2*/
-Route::post('/register2-custom',[AuthController::class, 'Register2Custom'])->name('register2.custom'); /*Register2 Function*/
-
-//logout
-Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
-
-/*Issues*/
-
-//Update Issue Status
-Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus'])->name('issues.update');
-// Forget Password - Show form
-Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
-//welcomepage
+// Welcome/Landing Page
 Route::get('/', [AuthController::class, 'Welcome'])->name('welcome');
 
-//Previous Reports
-Route::get('/reports', [ReportController::class, 'index'])->name('report');
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes
+|--------------------------------------------------------------------------
+*/
 
-//See more page (from Previous report page)
-Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
+// Login Routes
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login-custom', [AuthController::class, 'LoginCustom'])->name('login.custom');
 
-// Forget Password - Handle submission
+// Registration Routes
+Route::get('/register', [AuthController::class, 'Register'])->name('register');
+Route::post('/register-custom', [AuthController::class, 'RegisterCustom'])->name('register.custom');
+Route::get('/register2', [AuthController::class, 'Register2'])->name('register2');
+Route::post('/register2-custom', [AuthController::class, 'Register2Custom'])->name('register2.custom');
+
+// Logout Route
+Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+
+// Password Reset Routes
+Route::get('/forget-password', [AuthController::class, 'showForgetPasswordForm'])->name('password.request');
 Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
-
-//recovery --- Harishian
 Route::get('/recovery-email-sent', function () {
     return view('auth.recovery');
-});
+})->name('recovery.email.sent');
 
-//reset password --- Pasindi
 Route::get('/reset-password/{token}', function ($token) {
     return view('auth.passwords.reset', ['token' => $token]);
 })->name('passwords.reset');
+
+Route::post('/reset-password', function (Illuminate\Http\Request $request) {
+    // Password reset logic should be implemented here
+    return redirect('/login')->with('status', 'Password has been reset!');
+})->name('password.update');
 
 // Development route for direct access to reset password page
 Route::get('/reset-password-dev', function () {
     return view('auth.passwords.reset', ['token' => null]);
 })->name('password.reset.dev');
 
-// Add this POST route for password update
-Route::post('/reset-password', function (Illuminate\Http\Request $request) {
-    // Here you should add password reset logic
-    // For now, just return a simple response or redirect
-    return redirect('/login')->with('status', 'Password has been reset!');
-})->name('password.update');
+/*
+|--------------------------------------------------------------------------
+| Dashboard Routes
+|--------------------------------------------------------------------------
+*/
 
-// Student Dashboard --- Kaveeshi
+// Student Dashboard
 Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.studash');
 
 // Faculty Staff Dashboard
@@ -87,34 +81,39 @@ Route::get('/facultystaff/dashboard', function () {
     return view('facultystaff.fsdash');
 })->name('facultystaff.dashboard');
 
-// Main View Issues
-Route::get('/main/viewissues', function () {
-    $issue = (object)[
-        'id' => 'T001',
-        'title' => 'Projector in the NLH is not working',
-        'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-        'reporter_name' => 'Samanalee Fernando',
-        'reporter_email' => 'samanalee@gmail.com',
-        'student_id' => '21CIS004',
-        'created_at' => now(),
-        'status' => 'Faculty Administration',
-        'location' => 'NLH',
-        'reporter_role' => 'Student'
-    ];
-    return view('main.viewissues', compact('issue'));
-})->name('main.viewissues');
-
-// Issues Index
-Route::get('/issues/all', function () {
-    return view('issues.index');
-})->name('issues.all');
-
 // Maintenance Department Dashboard
 Route::get('/maintenancedep/dashboard', function () {
     return view('maintenancedep.maintenancedepdash');
 })->name('maintenancedep.dashboard');
 
+/*
+|--------------------------------------------------------------------------
+| Issue Management Routes
+|--------------------------------------------------------------------------
+*/
+
+// View specific issue
+Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
+
+// Update Issue Status
+Route::post('/issues/update/{id}', [IssueController::class, 'UpdateIssueStatus'])->name('issues.update');
+
+// Issues Index/List
+Route::get('/issues/all', function () {
+    return view('issues.index');
+})->name('issues.all');
+
+/*
+|--------------------------------------------------------------------------
+| Report Management Routes
+|--------------------------------------------------------------------------
+*/
+
 // Previous Reports
+Route::get('/reports', [ReportController::class, 'index'])->name('report');
+Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
+
+// Alternative Previous Reports Route
 Route::get('/previous-reports', function () {
     $reports = [
         (object)['id' => 1, 'title' => 'Report 1'],
@@ -123,19 +122,50 @@ Route::get('/previous-reports', function () {
     return view('previous-report.previousReport', compact('reports'));
 })->name('previous.reports');
 
-// Shared View Issues
-Route::get('/shared/viewissues', function () {
+/*
+|--------------------------------------------------------------------------
+| View Routes (Static/Demo Pages)
+|--------------------------------------------------------------------------
+*/
+
+// Main View Issues (with sample data)
+Route::get('/main/viewissues', function () {
     $issue = (object)[
-        'id' => 'T001',
+        'issue_id' => 'T001',
         'title' => 'Projector in the NLH is not working',
         'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-        'reporter_name' => 'Samanalee Fernando',
-        'reporter_email' => 'samanalee@gmail.com',
-        'student_id' => '21CIS004',
-        'created_at' => now(),
-        'status' => 'Faculty Administration',
         'location' => 'NLH',
-        'reporter_role' => 'Student'
+        'status' => 'pending',
+        'reported_at' => now(),
+        'user' => (object)[
+            'full_name' => 'Samanalee Fernando',
+            'email' => 'samanalee@gmail.com',
+            'ID' => '21CIS004',
+            'role' => (object)[
+                'role_name' => 'Student'
+            ]
+        ]
+    ];
+    return view('main.viewissues', compact('issue'));
+})->name('main.viewissues');
+
+// Shared View Issues (with sample data)
+Route::get('/shared/viewissues', function () {
+    $issue = (object)[
+        'issue_id' => 'T001',
+        'title' => 'Projector in the NLH is not working',
+        'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
+        'location' => 'NLH',
+        'status' => 'pending',
+        'reported_at' => now(),
+        'user' => (object)[
+            'full_name' => 'Samanalee Fernando',
+            'email' => 'samanalee@gmail.com',
+            'ID' => '21CIS004',
+            'role' => (object)[
+                'role_name' => 'Student'
+            ]
+        ]
     ];
     return view('shared.viewissues', compact('issue'));
 })->name('shared.viewissues');
