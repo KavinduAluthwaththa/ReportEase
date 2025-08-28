@@ -4,7 +4,7 @@
         <div class="register-container">
             <h2>Sign up to <span style="color: #e67e22;">ReportEase</span></h2>
             <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <form method="POST" action="{{ route('register.custom') }}">
                         @csrf
 
