@@ -38,6 +38,12 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    //return registration2 view
+    public function Register2()
+    {
+        return view('auth.register2');
+    }
+
 
 
 
@@ -57,6 +63,29 @@ public function showForgetPasswordForm()
 
     //validating registration
     public function RegisterCustom(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'registration_number' => 'required|string|unique:users,registration_number',
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required|string',
+        ]);
+
+        // Prepare data
+        $data = $request->all();
+        $data['name'] = $data['first_name'] . ' ' . $data['last_name'];
+
+        // Create the user
+        $this->create($data);
+
+        return redirect("Login")->withSuccess('You have successfully registered');
+    }
+
+    //validating registration2
+    public function Register2Custom(Request $request)
     {
         // Validate the request
         $request->validate([
@@ -110,4 +139,3 @@ public function showForgetPasswordForm()
         return view('welcome');
     }
 }
-
