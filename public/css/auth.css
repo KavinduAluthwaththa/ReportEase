@@ -1,142 +1,168 @@
-/*styles for the register and login page*/
-.register-container {
-    color: #555;
-    background-color: #fff;
-    padding: 30px;
-    padding-left: 50px;
-    border-radius: 0;
-    box-shadow: none;
+/* General Body Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Header Styles */
+.auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #000000;
+}
+
+.logo-container .logo {
+    height: 40px;
+}
+
+.auth-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-nav a {
     text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.auth-nav .profile-icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-left: 10px; /* Add some space between "Sign Up" and the icon */
+}
+
+/* Main Content Styles */
+.auth-main {
+    display: flex;
+    min-height: 100vh; /* Full viewport height */
+    width: 100%; /* Ensure it takes full width */
+    background-color: #fff;
+}
+
+/* Left Side (Form) */
+.auth-left {
+    width: 40%; /* Fixed width for the left side */
+    padding: 0 40px; /* Remove top and bottom padding */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height:100%;
-
+    border-radius: 8px; /* Apply border-radius to the left side */
+    margin: 0; /* Remove margin to eliminate gaps */
+    max-width: 450px; /* Limit max width of the form block */
 }
 
-.register-container:hover{
-    color: #292929;
-}
-
-.register-container h2 {
+.login-form h2 {
+    font-size: 28px; /* Slightly larger font size */
+    margin-bottom: 30px; /* More space below heading */
     color: #333;
-    margin-bottom: 20px;
+}
+
+.login-form h2 text{
+    color: #ff6600;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Increase space between form groups */
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"],
-.form-group select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-sizing: border-box;
+.form-group input {
+    width: 93%;
+    padding: 14px; /* Larger padding for inputs */
+    border: 1px solid #ddd; /* Lighter border */
+    border-radius: 5px;
     font-size: 16px;
-    background-color: #fff;
 }
 
 .form-group select {
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px top 50%;
-    background-size: 16px;
-}
-
-.form-group .phone-input {
-    display: flex;
-}
-
-.form-group .phone-input input[type="text"] {
-    width: 80%;
-    margin-left: 10px;
-}
-
-.submit-button {
-    background-color: #ff6600;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 18px;
     width: 100%;
-    display: block;
-    margin-top: 20px;
+    padding: 14px; /* Larger padding for inputs */
+    border: 1px solid #ddd; /* Lighter border */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: white;
 }
 
-.submit-button:hover {
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribute items */
+    margin-top: 25px; /* More space above actions */
+}
+
+.btn-login {
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    padding: 12px 25px; /* Adjust padding */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
     background-color: #e65c00;
 }
 
-.login-link {
-    text-align: center;
-    margin-top: 20px;
+.forgot-password {
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
 }
 
-a {
-    text-decoration: none;
-    color: #333;
-}
-
-.submit-button-black {
-    color: #fff; 
-    background-color:rgb(0, 0, 0); 
-    text-decoration: none;
-    padding: 12px 20px; 
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    display: block;
-    margin-top: 20px;
+.create-account-section {
+    margin-top: 40px; /* More space above this section */
     text-align: center;
 }
 
-.submit-button-black:hover {
-    background-color: #2c2c2c;
+.create-account-section p {
+    margin-bottom: 15px;
+    color: #555;
+    text-align: left;
 }
 
-.left-side {
-    width: 40%;
-    min-height: 91vh;
-    background-size: cover;
-    background-position: center;
+.btn-create-account {
+    background-color: #000;
+    color: #fff;
+    padding: 12px 30px; /* Adjust padding */
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    width: 85%;
+}
+
+.btn-create-account:hover {
     background-color: #333;
 }
 
-/*override submit-button styles within the flex container for login */
-.form-group.d-flex .submit-button {
-    max-width: 150px;
-    margin: 0;
-}
-
-.form-group.d-flex {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-}
-
-.form-group.d-flex a {
-    align-content: center;
-}
-
-.right-side {
-    width: 60%;
-    min-height: 91vh;
+/* Right Side (Image) */
+.auth-right {
+    flex-grow: 1; /* Allow it to take remaining space */
     background-image: url('/images/bg.png');
     background-size: cover;
     background-position: center;
-    background-color: #333;
+    position: relative; /* Needed for absolute positioning of text */
+    display: flex;
+    align-items: flex-end; /* Align text to the bottom */
+    justify-content: center;
+    padding-bottom: 50px; /* Space from the bottom */
+}
+
+.background-text {
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 1.5;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Add shadow for readability */
 }
