@@ -51,7 +51,7 @@ body {
 /* Left Side (Form) */
 .auth-left {
     width: 55%;
-    min-width: 415px;
+    min-width: 35%;
     padding: 0 40px;
     display: flex;
     justify-content: center;
@@ -98,12 +98,10 @@ body {
     background-color: #ff6600;
     color: #fff;
     border: none;
-    padding: 14px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    width: 100%;
     transition: background-color 0.3s ease;
 }
 
