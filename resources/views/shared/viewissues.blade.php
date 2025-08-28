@@ -5,39 +5,39 @@
 <link rel="stylesheet" href="{{ asset('css/viewissues.css') }}">
 
     <div class="issue-container">
-        <h1 class="issue-header">Issue No: <span class="issue-number">IS{{ $issue->id ?? 'T001' }}</span></h1>
+        <h1 class="issue-header">Issue No: <span class="issue-number">IS{{ isset($issue) && isset($issue->issue_id) ? $issue->issue_id : 'T001' }}</span></h1>
 
-        <h2 class="issue-title issue-title-main">{{ $issue->title ?? 'Projector in the NLH is not working' }}</h2>
+        <h2 class="issue-title issue-title-main">{{ isset($issue) && isset($issue->title) ? $issue->title : 'Projector in the NLH is not working' }}</h2>
         
-        <p class="issue-description">{{ $issue->description ?? 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s' }}</p>
+        <p class="issue-description">{{ isset($issue) && isset($issue->description) ? $issue->description : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s' }}</p>
 
         <div class="row info-section">
             <div class="col-md-6">
                 <div class="info-item">
                     <p class="info-label">Reporter's Name</p>
-                    <p class="info-value">{{ $issue->reporter_name ?? 'Samanalee Fernando' }}</p>
+                    <p class="info-value">{{ isset($issue) && isset($issue->user) && isset($issue->user->full_name) ? $issue->user->full_name : 'Not Available' }}</p>
                 </div>
                 <div class="info-item">
-                    <p class="info-label">Reporter's email</p>
-                    <p class="info-value">{{ $issue->reporter_email ?? 'samanalee@gmail.com' }}</p>
+                    <p class="info-label">Reporter's Email</p>
+                    <p class="info-value">{{ isset($issue) && isset($issue->user) && isset($issue->user->email) ? $issue->user->email : 'Not Available' }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Issue Location</p>
-                    <p class="info-value">{{ $issue->location ?? 'NLH' }}</p>
+                    <p class="info-value">{{ isset($issue) && isset($issue->location) ? $issue->location : 'Not Specified' }}</p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="info-item">
-                    <p class="info-label">Index</p>
-                    <p class="info-value">{{ $issue->student_id ?? '21CIS004' }}</p>
+                    <p class="info-label">Reporter's ID</p>
+                    <p class="info-value">{{ isset($issue) && isset($issue->user) && isset($issue->user->ID) ? $issue->user->ID : 'Not Available' }}</p>
                 </div>
                 <div class="info-item">
-                    <p class="info-label">Date</p>
-                    <p class="info-value">{{ isset($issue->created_at) ? $issue->created_at->format('d/m/Y') : '21/03/2025' }}</p>
+                    <p class="info-label">Reported Date</p>
+                    <p class="info-value">{{ isset($issue) && isset($issue->reported_at) && $issue->reported_at ? $issue->reported_at->format('d/m/Y') : 'Not Available' }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Reporter's Role</p>
-                    <p class="info-value">{{ $issue->reporter_role ?? 'Student' }}</p>
+                    <p class="info-value">{{ isset($issue) && isset($issue->user) && isset($issue->user->role) && isset($issue->user->role->role_name) ? $issue->user->role->role_name : 'Not Available' }}</p>
                 </div>
             </div>
         </div>
@@ -62,13 +62,12 @@
         </div>
 
         <!-- Status Section -->
-        <form action="{{ isset($issue->id) ? route('issues.update', $issue->id) : '#' }}" method="POST">
+        <form action="{{ isset($issue) && isset($issue->issue_id) ? route('issues.update', $issue->issue_id) : '#' }}" method="POST">
             @csrf
-            @method('PUT')
             <p class="info-label">Issue Status</p>
             <div class="form-dropdown">
                 <button class="btn btn-outline-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Click Here
+                    {{ isset($issue) && isset($issue->status) ? ucfirst($issue->status) : 'Click Here' }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <button class="dropdown-item" type="submit" name="action" value="accept">Accept</button>

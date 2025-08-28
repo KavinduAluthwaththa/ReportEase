@@ -1,6 +1,7 @@
 @extends('layouts.guest')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <div class="main-wrapper">
         <div class="sub-headline">A reporting system that</div>
         <div class="headline">Streamlines Maintenance</div>
