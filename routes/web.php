@@ -18,6 +18,41 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 |
 */
 
+// All Pages Index - View all pages at once
+Route::get('/all-pages', function () {
+    $pages = [
+        // Authentication Pages
+        'Authentication Pages' => [
+            ['name' => 'Login', 'url' => '/login', 'description' => 'User login page'],
+            ['name' => 'Register', 'url' => '/register', 'description' => 'User registration page'],
+            ['name' => 'Forget Password', 'url' => '/forget-password', 'description' => 'Password reset request'],
+            ['name' => 'Recovery Email Sent', 'url' => '/recovery-email-sent', 'description' => 'Password recovery confirmation'],
+            ['name' => 'Reset Password', 'url' => '/reset-password-dev', 'description' => 'Password reset form'],
+        ],
+        
+        // Dashboard Pages
+        'Dashboard Pages' => [
+            ['name' => 'Student Dashboard', 'url' => '/student/dashboard', 'description' => 'Student dashboard view'],
+            ['name' => 'Faculty Staff Dashboard', 'url' => '/facultystaff/dashboard', 'description' => 'Faculty staff dashboard'],
+            ['name' => 'Maintenance Department Dashboard', 'url' => '/maintenancedep/dashboard', 'description' => 'Maintenance department dashboard'],
+        ],
+        
+        // Issue Management Pages
+        'Issue Management Pages' => [
+            ['name' => 'Shared View Issues (Static)', 'url' => '/shared/viewissues', 'description' => 'Shared issue viewing page with demo data'],
+            ['name' => 'Posted Issues', 'url' => '/PostedIssues', 'description' => 'View your posted issues'],
+        ],
+        
+        // Other Pages
+        'Other Pages' => [
+            ['name' => 'Welcome', 'url' => '/', 'description' => 'Welcome/home page'],
+            ['name' => 'All Pages', 'url' => '/all-pages', 'description' => 'This page - overview of all available pages'],
+        ]
+    ];
+    
+    return view('all-pages', compact('pages'));
+})->name('all.pages');
+
 
 // View specific issue
 Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
@@ -31,10 +66,6 @@ Route::post('/login-custom',[AuthController::class, 'LoginCustom'])->name('login
 //register
 Route::get('/register', [AuthController::class, 'Register'])->name('register'); /*View Register*/
 Route::post('/register-custom',[AuthController::class, 'RegisterCustom'])->name('register.custom'); /*Register Function*/
-
-//register2
-Route::get('/register2', [AuthController::class, 'Register2'])->name('register2'); /*View Register2*/
-Route::post('/register2-custom',[AuthController::class, 'Register2Custom'])->name('register2.custom'); /*Register2 Function*/
 
 //logout
 Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
@@ -87,43 +118,18 @@ Route::get('/facultystaff/dashboard', function () {
     return view('facultystaff.fsdash');
 })->name('facultystaff.dashboard');
 
-// Main View Issues
-Route::get('/main/viewissues', function () {
-    $issue = (object)[
-        'id' => 'T001',
-        'title' => 'Projector in the NLH is not working',
-        'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-        'reporter_name' => 'Samanalee Fernando',
-        'reporter_email' => 'samanalee@gmail.com',
-        'student_id' => '21CIS004',
-        'created_at' => now(),
-        'status' => 'Faculty Administration',
-        'location' => 'NLH',
-        'reporter_role' => 'Student'
-    ];
-    return view('main.viewissues', compact('issue'));
-})->name('main.viewissues');
-
-// Issues Index
-Route::get('/issues/all', function () {
-    return view('issues.index');
-})->name('issues.all');
-
 // Maintenance Department Dashboard
 Route::get('/maintenancedep/dashboard', function () {
     return view('maintenancedep.maintenancedepdash');
 })->name('maintenancedep.dashboard');
 
 // Previous Reports
-Route::get('/previous-reports', function () {
-    $reports = [
-        (object)['id' => 1, 'title' => 'Report 1'],
-        (object)['id' => 2, 'title' => 'Report 2'],
-    ];
-    return view('previous-report.previousReport', compact('reports'));
-})->name('previous.reports');
+Route::get('/PostedIssues', [IssueController::class, 'postedIssues'])->name('previous.reports');
 
 // Shared View Issues
+Route::get('/shared/viewissues/{id}', [IssueController::class, 'showViewIssues'])->name('shared.viewissues');
+
+// Static route for testing (keep for development)
 Route::get('/shared/viewissues', function () {
     $issue = (object)[
         'id' => 'T001',
@@ -133,9 +139,9 @@ Route::get('/shared/viewissues', function () {
         'reporter_email' => 'samanalee@gmail.com',
         'student_id' => '21CIS004',
         'created_at' => now(),
-        'status' => 'Faculty Administration',
+        'status' => 'Pending',
         'location' => 'NLH',
         'reporter_role' => 'Student'
     ];
     return view('shared.viewissues', compact('issue'));
-})->name('shared.viewissues');
+})->name('shared.viewissues.static');

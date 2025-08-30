@@ -12,25 +12,79 @@ class IssueController extends Controller
     public function show($id)
     {
         try {
-            // Try to find the issue (when database is ready)
-            $issue = Issue::findOrFail($id);
-            return view('main.viewissues', compact('issue'));
+            // Find the issue with relationships loaded
+            $issue = Issue::with(['user.role', 'user.section', 'assignee.role'])
+                          ->where('issue_id', $id)
+                          ->firstOrFail();
+            
+            return view('shared.viewissues', compact('issue'));
         } catch (\Exception $e) {
             // For now, show with sample data when no database
             $issue = (object) [
-                'id' => $id,
+                'issue_id' => $id,
                 'title' => 'Projector in the NLH is not working',
                 'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-                'reporter_name' => 'Samanalee Fernando',
-                'reporter_email' => 'samanalee@gmail.com',
-                'student_id' => '21CIS004',
                 'location' => 'NLH',
-                'reporter_role' => 'Student',
                 'status' => 'pending',
-                'created_at' => now()
+                'upVotes' => 5,
+                'reported_at' => now(),
+                'resolved_at' => null,
+                'user' => (object) [
+                    'full_name' => 'Samanalee Fernando',
+                    'email' => 'samanalee@gmail.com',
+                    'ID' => '21CIS004',
+                    'phone_number' => '0771234567',
+                    'role' => (object) [
+                        'role_name' => 'Student'
+                    ],
+                    'section' => (object) [
+                        'section_name' => 'Computer Science'
+                    ]
+                ],
+                'assignee' => null,
+                'evidence' => 'projector_issue1.jpg,projector_issue2.jpg'
             ];
-            return view('main.viewissues', compact('issue'));
+            return view('shared.viewissues', compact('issue'));
         }
+    }
+
+    // Show posted issues for current user
+    public function postedIssues()
+    {
+        try {
+            // Get issues for the current user (you may need to add authentication)
+            $reports = Issue::with(['reporter', 'assignee'])
+                           ->orderBy('reported_at', 'desc')
+                           ->get();
+            
+            return view('shared.PostedIssues', compact('reports'));
+        } catch (\Exception $e) {
+            // For now, show with sample data when no database
+            $reports = collect([
+                (object)[
+                    'issue_id' => 1,
+                    'id' => 1,
+                    'title' => 'Projector in NLH not working'
+                ],
+                (object)[
+                    'issue_id' => 2,
+                    'id' => 2,
+                    'title' => 'Wi-Fi connectivity issues in Library'
+                ],
+                (object)[
+                    'issue_id' => 3,
+                    'id' => 3,
+                    'title' => 'Broken chair in Lecture Hall 2'
+                ]
+            ]);
+            return view('shared.PostedIssues', compact('reports'));
+        }
+    }
+
+    // Show issue in viewissues page (same as show method but explicit)
+    public function showViewIssues($id)
+    {
+        return $this->show($id);
     }
 
     // Update Issue Status
@@ -42,8 +96,8 @@ class IssueController extends Controller
         ]);
 
         try {
-            // Find the issue by ID
-            $issue = Issue::findOrFail($id);
+            // Find the issue by ID using the correct primary key
+            $issue = Issue::where('issue_id', $id)->firstOrFail();
 
             // Map action to status
             $statusMap = [

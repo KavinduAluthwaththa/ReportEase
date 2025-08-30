@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ asset('css/viewissues.css') }}">
 
     <div class="issue-container">
-        <h1 class="issue-header">Issue No: <span class="issue-number">IS{{ $issue->id ?? 'T001' }}</span></h1>
+        <h1 class="issue-header">Issue No: <span class="issue-number">IS{{ $issue->issue_id ?? 'T001' }}</span></h1>
 
         <h2 class="issue-title issue-title-main">{{ $issue->title ?? 'Projector in the NLH is not working' }}</h2>
         
@@ -15,11 +15,11 @@
             <div class="col-md-6">
                 <div class="info-item">
                     <p class="info-label">Reporter's Name</p>
-                    <p class="info-value">{{ $issue->reporter_name ?? 'Samanalee Fernando' }}</p>
+                    <p class="info-value">{{ $issue->user->full_name ?? 'Samanalee Fernando' }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Reporter's email</p>
-                    <p class="info-value">{{ $issue->reporter_email ?? 'samanalee@gmail.com' }}</p>
+                    <p class="info-value">{{ $issue->user->email ?? 'samanalee@gmail.com' }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Issue Location</p>
@@ -28,16 +28,16 @@
             </div>
             <div class="col-md-6">
                 <div class="info-item">
-                    <p class="info-label">Index</p>
-                    <p class="info-value">{{ $issue->student_id ?? '21CIS004' }}</p>
+                    <p class="info-label">Student ID</p>
+                    <p class="info-value">{{ $issue->user->ID ?? '21CIS004' }}</p>
                 </div>
                 <div class="info-item">
-                    <p class="info-label">Date</p>
-                    <p class="info-value">{{ isset($issue->created_at) ? $issue->created_at->format('d/m/Y') : '21/03/2025' }}</p>
+                    <p class="info-label">Reported Date</p>
+                    <p class="info-value">{{ isset($issue->reported_at) ? $issue->reported_at->format('d/m/Y') : '21/03/2025' }}</p>
                 </div>
                 <div class="info-item">
                     <p class="info-label">Reporter's Role</p>
-                    <p class="info-value">{{ $issue->reporter_role ?? 'Student' }}</p>
+                    <p class="info-value">{{ $issue->user->role->role_name ?? 'Student' }}</p>
                 </div>
             </div>
         </div>
@@ -46,35 +46,42 @@
         <div class="attachment-container">
             <p class="info-label">Attachments</p>
             <div class="attachment-thumbnails">
-                <div class="attachment-item">
-                    <div class="attachment-thumbnail gradient-1">
-                        <i class="fas fa-image attachment-icon"></i>
+                @if(isset($issue->evidence) && $issue->evidence)
+                    <div class="attachment-item">
+                        <div class="attachment-thumbnail gradient-1">
+                            @if(strpos($issue->evidence, 'data:image') === 0)
+                                <img src="{{ $issue->evidence }}" alt="Evidence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            @else
+                                <i class="fas fa-file attachment-icon"></i>
+                            @endif
+                        </div>
+                        <small class="attachment-filename">evidence_{{ $issue->issue_id ?? 'T001' }}.jpg</small>
                     </div>
-                    <small class="attachment-filename">sts.jpg</small>
-                </div>
-                <div class="attachment-item">
-                    <div class="attachment-thumbnail gradient-2">
-                        <i class="fas fa-image attachment-icon"></i>
+                @else
+                    <div class="attachment-item">
+                        <div class="attachment-thumbnail gradient-1">
+                            <i class="fas fa-image attachment-icon"></i>
+                        </div>
+                        <small class="attachment-filename">No attachments</small>
                     </div>
-                    <small class="attachment-filename">sts2.jpg</small>
-                </div>
+                @endif
             </div>
         </div>
 
         <!-- Status Section -->
-        <form action="{{ isset($issue->id) ? route('issues.update', $issue->id) : '#' }}" method="POST">
+        <form action="{{ route('issues.update', $issue->issue_id ?? 'T001') }}" method="POST">
             @csrf
-            @method('PUT')
-            <p class="info-label">Issue Status</p>
+            <p class="info-label">Issue Status: <span class="current-status">{{ $issue->status ?? 'Pending' }}</span></p>
             <div class="form-dropdown">
                 <button class="btn btn-outline-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Click Here
+                    Select Action
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <button class="dropdown-item" type="submit" name="action" value="accept">Accept</button>
-                    <button class="dropdown-item" type="submit" name="action" value="send_to_maintenance">Send to Maintenance</button>
-                    <button class="dropdown-item" type="submit" name="action" value="change_request">Change request</button>
-                    <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
+                    <button class="dropdown-item" type="submit" name="status" value="Accepted">Accept</button>
+                    <button class="dropdown-item" type="submit" name="status" value="Assigned to Maintenance">Send to Maintenance</button>
+                    <button class="dropdown-item" type="submit" name="status" value="Change Requested">Change Request</button>
+                    <button class="dropdown-item" type="submit" name="status" value="Rejected">Reject</button>
+                    <button class="dropdown-item" type="submit" name="status" value="Resolved">Mark as Resolved</button>
                 </div>
             </div>
             <br>

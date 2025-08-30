@@ -19,10 +19,10 @@
             <tbody>
                 @foreach($reports as $report)
                 <tr class="table-row">
-                    <td>{{ $report->id }}</td>
+                    <td>IS{{ $report->issue_id ?? $report->id }}</td>
                     <td>{{ $report->title }}</td>
                     <td>
-                        <a href="{{ route('report.show', $report->id) }}" class="see-more-link">SEE MORE</a>
+                        <a href="{{ route('shared.viewissues', $report->issue_id ?? $report->id) }}" class="see-more-link">SEE MORE</a>
                     </td>
                 </tr>
                 @endforeach
