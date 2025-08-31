@@ -28,7 +28,7 @@
                 @endforeach
             </tbody>
         </table>
-        <a class="new-issue-btn">REPORT AN ISSUE</a>
+        <a href="{{ route('issue.create') }}" class="btn btn-primary">REPORT AN ISSUE</a>
 
     </div>
 @endsection
