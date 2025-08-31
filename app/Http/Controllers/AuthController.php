@@ -33,7 +33,21 @@ class AuthController extends Controller
                 'user_role_id' => $user->role_id ?? null,
                 'user_id' => $user->user_id ?? null,
             ]);
-            return redirect()->intended('dashboard')->withSuccess('You have successfully logged in');
+
+            // Redirect to dashboard based on role (compatible with older PHP)
+            if ($roleName === 'Student') {
+                $targetUrl = route('student.studash');
+            } elseif ($roleName === 'Faculty Staff') {
+                $targetUrl = route('facultystaff.dashboard');
+            } elseif ($roleName === 'Maintenance Department') {
+                $targetUrl = route('maintenancedep.dashboard');
+            } elseif ($roleName === 'Admin') {
+                $targetUrl = route('all.pages');
+            } else {
+                $targetUrl = route('welcome');
+            }
+
+            return redirect()->intended($targetUrl)->withSuccess('You have successfully logged in');
         }
 
         // Authentication failed
@@ -52,22 +66,11 @@ class AuthController extends Controller
         return view('auth.register2');
     }
 
-
-
-
-
-
     // Show forget password form
-public function showForgetPasswordForm()
-{
-    return view('auth.forgetpassword');
-}
-
-
-
-
-
-
+    public function showForgetPasswordForm()
+    {
+        return view('auth.forgetpassword');
+    }
 
     //validating registration
     public function RegisterCustom(Request $request)
