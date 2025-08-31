@@ -12,9 +12,8 @@
         </div>
 
         <div class="action-buttons">
-            <a href="" class="btn btn-primary">REVIEW REQUESTS</a>
-            <a href="" class="btn btn-secondary">REPORT AN ISSUE</a>
-            <a href="" class="btn btn-secondary">PREVIOUS ISSUES</a>
+            <a href="" class="btn btn-primary">REPORT AN ISSUE</a>
+            <a href="{{ route('previous.reports') }}" class="btn btn-secondary">PREVIOUS ISSUES</a>
         </div>
     </div>
 @stop

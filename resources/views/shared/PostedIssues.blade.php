@@ -28,7 +28,7 @@
                 @endforeach
             </tbody>
         </table>
-        <a class="new-issue-btn">REPORT A NEW ISSUE</a>
+        <a class="new-issue-btn">REPORT AN ISSUE</a>
 
     </div>
 @endsection
