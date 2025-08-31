@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-6">
                 <div class="info-item">
-                    <p class="info-label">Student ID</p>
+                    <p class="info-label">User ID</p>
                     <p class="info-value">{{ $issue->user->ID ?? '21CIS004' }}</p>
                 </div>
                 <div class="info-item">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="info-item">
                     <p class="info-label">Reporter's Role</p>
-                    <p class="info-value">{{ $issue->user->role->role_name ?? 'Student' }}</p>
+                    <p class="info-value">{{ $issue->user->role->role_name ?? 'Admin' }}</p>
                 </div>
             </div>
         </div>
@@ -69,24 +69,29 @@
         </div>
 
         <!-- Status Section -->
-        <form action="{{ route('issues.update', $issue->issue_id ?? 'T001') }}" method="POST">
-            @csrf
-            <p class="info-label">Issue Status: <span class="current-status">{{ $issue->status ?? 'Pending' }}</span></p>
-            <div class="form-dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select Action
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <button class="dropdown-item" type="submit" name="status" value="Accepted">Accept</button>
-                    <button class="dropdown-item" type="submit" name="status" value="Assigned to Maintenance">Send to Maintenance</button>
-                    <button class="dropdown-item" type="submit" name="status" value="Change Requested">Change Request</button>
-                    <button class="dropdown-item" type="submit" name="status" value="Rejected">Reject</button>
-                    <button class="dropdown-item" type="submit" name="status" value="Resolved">Mark as Resolved</button>
+        @php
+            $role = session('user_role');
+            $canUpdateStatus = in_array($role, ['Admin', 'Faculty Staff', 'Maintenance Department']);
+        @endphp
+        <p class="info-label">Issue Status: <span class="current-status">{{ $issue->status ?? 'Pending' }}</span></p>
+        @if($canUpdateStatus)
+            <form action="{{ route('issues.update', $issue->issue_id ?? 'T001') }}" method="POST">
+                @csrf
+                <div class="form-dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" type="submit" name="action" value="accept">Accept</button>
+                        <button class="dropdown-item" type="submit" name="action" value="send_to_maintenance">Send to Maintenance</button>
+                        <button class="dropdown-item" type="submit" name="action" value="change_request">Change Request</button>
+                        <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <button type="submit" class="submit-button ">UPDATE</button>
-        </form>
+                <br>
+                <button type="submit" class="submit-button">UPDATE</button>
+            </form>
+        @endif
     </div>
 
     <!-- Bootstrap CSS and JS -->

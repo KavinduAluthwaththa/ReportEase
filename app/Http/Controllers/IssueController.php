@@ -95,6 +95,13 @@ class IssueController extends Controller
             'action' => 'required|string|in:accept,send_to_maintenance,change_request,reject',
         ]);
 
+        // Authorization: only allow certain roles to update status
+        $role = session('user_role');
+        $allowedRoles = ['Admin', 'Faculty Staff', 'Maintenance Department'];
+        if (!in_array($role, $allowedRoles)) {
+            return redirect()->back()->with('error', 'You are not authorized to update status.');
+        }
+
         try {
             // Find the issue by ID using the correct primary key
             $issue = Issue::where('issue_id', $id)->firstOrFail();
