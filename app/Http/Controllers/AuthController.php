@@ -25,6 +25,14 @@ class AuthController extends Controller
         // Attempt to login
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
+            // Store user role/type in session for quick access in views
+            $user = auth()->user();
+            $roleName = optional($user->role)->role_name;
+            session([
+                'user_role' => $roleName,
+                'user_role_id' => $user->role_id ?? null,
+                'user_id' => $user->user_id ?? null,
+            ]);
             return redirect()->intended('dashboard')->withSuccess('You have successfully logged in');
         }
 
@@ -121,7 +129,9 @@ public function showForgetPasswordForm()
     //logout function
     public function Logout()
     {
-        auth()->logout();
+    // Clear custom session entries
+    session()->forget(['user_role', 'user_role_id', 'user_id']);
+    auth()->logout();
         return redirect('Login')->withSuccess('You have successfully logged out');
     }
 
