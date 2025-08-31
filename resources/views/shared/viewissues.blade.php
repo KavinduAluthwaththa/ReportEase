@@ -69,29 +69,23 @@
         </div>
 
         <!-- Status Section -->
-        @php
-            $role = session('user_role');
-            $canUpdateStatus = in_array($role, ['Admin', 'Faculty Staff', 'Maintenance Department']);
-        @endphp
         <p class="info-label">Issue Status: <span class="current-status">{{ $issue->status ?? 'Pending' }}</span></p>
-        @if($canUpdateStatus)
-            <form action="{{ route('issues.update', $issue->issue_id ?? 'T001') }}" method="POST">
-                @csrf
-                <div class="form-dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select Action
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" type="submit" name="action" value="accept">Accept</button>
-                        <button class="dropdown-item" type="submit" name="action" value="send_to_maintenance">Send to Maintenance</button>
-                        <button class="dropdown-item" type="submit" name="action" value="change_request">Change Request</button>
-                        <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
-                    </div>
+        <form action="{{ route('issues.update', $issue->issue_id ?? 'T001') }}" method="POST">
+            @csrf
+            <div class="form-dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select Action
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" type="submit" name="action" value="accept">Accept</button>
+                    <button class="dropdown-item" type="submit" name="action" value="send_to_maintenance">Send to Maintenance</button>
+                    <button class="dropdown-item" type="submit" name="action" value="change_request">Change Request</button>
+                    <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
                 </div>
-                <br>
-                <button type="submit" class="submit-button">UPDATE</button>
-            </form>
-        @endif
+            </div>
+            <br>
+            <button type="submit" class="submit-button">UPDATE</button>
+        </form>
     </div>
 
     <!-- Bootstrap CSS and JS -->
