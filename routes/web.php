@@ -41,6 +41,7 @@ Route::get('/all-pages', function () {
         'Issue Management Pages' => [
             ['name' => 'Shared View Issues (Static)', 'url' => '/shared/viewissues', 'description' => 'Shared issue viewing page with demo data'],
             ['name' => 'Posted Issues', 'url' => '/PostedIssues', 'description' => 'View your posted issues'],
+            ['name' => 'Create Issue', 'url' => 'shared/CreateIssue', 'description' => 'Report a new issue'],
         ],
         
         // Other Pages
@@ -145,3 +146,7 @@ Route::get('/shared/viewissues', function () {
     ];
     return view('shared.viewissues', compact('issue'));
 })->name('shared.viewissues.static');
+
+// Create Issue (form + submit)
+Route::get('shared/CreateIssue', [IssueController::class, 'create'])->name('issues.create');
+Route::post('shared/CreateIssue', [IssueController::class, 'store'])->name('issues.store');
