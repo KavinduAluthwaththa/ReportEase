@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <a href="{{ route('register2') }}">
+                    <a href="{{ route('register') }}">
                         <button type="submit" class="btn-login">NEXT</button>
                     </a>
                 </div>
