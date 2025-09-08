@@ -8,56 +8,6 @@ use App\Models\Issue;
 
 class IssueController extends Controller
 {
-    // Show create issue form
-    public function create()
-    {
-        $user = auth()->user();
-        return view('shared.CreateIssue', [
-            'prefill' => [
-                'full_name' => $user->full_name ?? '',
-                'email' => $user->email ?? '',
-                'ID' => $user->ID ?? '',
-            ]
-        ]);
-    }
-
-    // Store new issue
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'registration_number' => 'required|string|max:50',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'evidence' => 'nullable|image|max:10240', // 10MB
-        ]);
-
-        try {
-            // Save evidence if provided
-            $evidencePath = null;
-            if ($request->hasFile('evidence')) {
-                $evidencePath = $request->file('evidence')->store('evidence', 'public');
-            }
-
-            // Create issue (fallback to sample if DB not ready)
-            $issue = new Issue();
-            $issue->title = $data['title'];
-            $issue->description = $data['description'];
-            $issue->location = $request->input('location');
-            $issue->status = 'pending';
-            $issue->evidence = $evidencePath;
-            $issue->reported_by_user_id = auth()->id();
-            $issue->reported_at = now();
-            // Attempt save but allow fallback
-            try { $issue->save(); } catch (\Throwable $t) { /* ignore for demo */ }
-
-            return redirect()->route('shared.viewissues', $issue->issue_id ?? 1)
-                ->with('success', 'Issue submitted successfully');
-        } catch (\Throwable $e) {
-            return back()->withErrors(['form' => 'Failed to submit issue: '.$e->getMessage()])->withInput();
-        }
-    }
     // Show a specific issue
     public function show($id)
     {
@@ -144,6 +94,13 @@ class IssueController extends Controller
         $request->validate([
             'action' => 'required|string|in:accept,send_to_maintenance,change_request,reject',
         ]);
+
+        // Authorization: only allow certain roles to update status
+        $role = session('user_role');
+        $allowedRoles = ['Admin', 'Faculty Staff', 'Maintenance Department'];
+        if (!in_array($role, $allowedRoles)) {
+            return redirect()->back()->with('error', 'You are not authorized to update status.');
+        }
 
         try {
             // Find the issue by ID using the correct primary key
