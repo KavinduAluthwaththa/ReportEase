@@ -49,13 +49,16 @@
                 @if(isset($issue->evidence) && $issue->evidence)
                     <div class="attachment-item">
                         <div class="attachment-thumbnail gradient-1">
-                            @if(strpos($issue->evidence, 'data:image') === 0)
-                                <img src="{{ $issue->evidence }}" alt="Evidence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                            @php
+                                $isImage = in_array(strtolower(pathinfo($issue->evidence, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+                            @endphp
+                            @if($isImage)
+                                <img src="{{ asset('storage/' . $issue->evidence) }}" alt="Evidence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                             @else
                                 <i class="fas fa-file attachment-icon"></i>
                             @endif
                         </div>
-                        <small class="attachment-filename">evidence_{{ $issue->issue_id ?? 'T001' }}.jpg</small>
+                        <small class="attachment-filename">{{ basename($issue->evidence) }}</small>
                     </div>
                 @else
                     <div class="attachment-item">

@@ -33,6 +33,11 @@ class Issue extends Model
         return $this->belongsTo(User::class, 'reported_by_user_id', 'user_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'reported_by_user_id', 'user_id');
+    }
+
     public function assignee()
     {
         return $this->belongsTo(User::class, 'assigned_to_user_id', 'user_id');

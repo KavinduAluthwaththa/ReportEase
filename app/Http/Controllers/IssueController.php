@@ -13,7 +13,7 @@ class IssueController extends Controller
     {
         try {
             // Get all issues with user relationships
-            $reports = Issue::with(['reporter.role', 'assignee'])
+            $reports = Issue::with(['user.role', 'assignee.role'])
                            ->orderBy('reported_at', 'desc')
                            ->get();
             
@@ -93,24 +93,33 @@ class IssueController extends Controller
 
         $issue->save();
 
-        // Redirect to the issue view page or previous reports
-        if (!empty($issue->issue_id)) {
-            return redirect()->route('shared.viewissues', $issue->issue_id)
-                             ->with('success', 'Issue submitted successfully.');
+        // Redirect to appropriate dashboard based on user role
+        $role = session('user_role');
+        
+        if ($role === 'Student') {
+            return redirect()->route('student.studash')->with('success', 'Issue submitted successfully.');
+        } elseif ($role === 'Faculty Staff') {
+            return redirect()->route('facultystaff.dashboard')->with('success', 'Issue submitted successfully.');
+        } elseif ($role === 'Maintenance Department') {
+            return redirect()->route('maintenancedep.dashboard')->with('success', 'Issue submitted successfully.');
+        } elseif ($role === 'Admin') {
+            return redirect()->route('all.pages')->with('success', 'Issue submitted successfully.');
+        } else {
+            return redirect()->route('welcome')->with('success', 'Issue submitted successfully.');
         }
-        return redirect()->route('previous.reports')->with('success', 'Issue submitted successfully.');
     }
     // Show a specific issue
     public function show($id)
     {
         try {
             // Find the issue with relationships loaded
-            $issue = Issue::with(['user.role', 'user.section', 'assignee.role'])
+            $issue = Issue::with(['user.role', 'assignee.role'])
                           ->where('issue_id', $id)
                           ->firstOrFail();
             
             return view('shared.viewissues', compact('issue'));
         } catch (\Exception $e) {
+            \Log::error('Error loading issue: ' . $e->getMessage());
             // For now, show with sample data when no database
             $issue = (object) [
                 'issue_id' => $id,
@@ -145,7 +154,7 @@ class IssueController extends Controller
     {
         try {
             // Get issues for the current user (you may need to add authentication)
-            $reports = Issue::with(['reporter', 'assignee'])
+            $reports = Issue::with(['user.role', 'assignee.role'])
                            ->orderBy('reported_at', 'desc')
                            ->get();
             
