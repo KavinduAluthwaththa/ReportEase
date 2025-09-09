@@ -79,8 +79,9 @@ class AuthController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'registration_number' => 'required|string|unique:users,registration_number',
+            'email' => 'required|email|unique:Users,email',
+            'registration_number' => 'required|string|unique:Users,ID',
+            'phone_number' => 'required|numeric|unique:Users,phone_number',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|string',
         ]);
@@ -92,7 +93,7 @@ class AuthController extends Controller
         // Create the user
         $this->create($data);
 
-        return redirect("Login")->withSuccess('You have successfully registered');
+        return redirect()->route('login')->withSuccess('You have successfully registered');
     }
 
     //validating registration2
@@ -102,8 +103,8 @@ class AuthController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'registration_number' => 'required|string|unique:users,registration_number',
+            'email' => 'required|email|unique:Users,email',
+            'registration_number' => 'required|string|unique:Users,ID',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|string',
         ]);
@@ -115,17 +116,27 @@ class AuthController extends Controller
         // Create the user
         $this->create($data);
 
-        return redirect("Login")->withSuccess('You have successfully registered');
+        return redirect()->route('login')->withSuccess('You have successfully registered');
     }
 
     public function create(array $data)
     {
+        // Map role name to role_id
+        $roleMapping = [
+            'Admin' => 1,
+            'Faculty Staff' => 2,
+            'Maintenance Department' => 3,
+            'Student' => 4,
+        ];
+
         return User::create([
-            'name' => $data['name'],
+            'full_name' => $data['name'],
             'email' => $data['email'],
-            'registration_number' => $data['registration_number'],
+            'ID' => $data['registration_number'],
             'password' => bcrypt($data['password']),
-            'role' => $data['role'],
+            'role_id' => $roleMapping[$data['role']] ?? 4, // Default to Student
+            'section_id' => 1, // Default to Faculty Administration
+            'phone_number' => $data['phone_number'] ?? 1234567890,
         ]);
     }
 
@@ -135,7 +146,7 @@ class AuthController extends Controller
     // Clear custom session entries
     session()->forget(['user_role', 'user_role_id', 'user_id']);
     auth()->logout();
-        return redirect('Login')->withSuccess('You have successfully logged out');
+        return redirect()->route('login')->withSuccess('You have successfully logged out');
     }
 
     //send reset link

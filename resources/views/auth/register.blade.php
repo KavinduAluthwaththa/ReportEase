@@ -4,6 +4,23 @@
     <div class="auth-left">
         <div class="login-form">
             <h2>Sign up to <span style="color: #e67e22;">ReportEase</span></h2>
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul style="color: red; margin: 10px 0;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+            @if (session('success'))
+                <div class="alert alert-success">
+                    <p style="color: green; margin: 10px 0;">{{ session('success') }}</p>
+                </div>
+            @endif
+            
             <form method="POST" action="{{ route('register.custom') }}">
                 @csrf
                 <div class="form-row">
@@ -25,24 +42,33 @@
                     <input id="registration_number" type="text" name="registration_number" placeholder="XXXXXXXX" required>
                 </div>
                 <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirm Password</label>
+                        <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group ">
                         <label for="role">Select Your Role</label>
                         <select id="role" name="role" required>
                             <option value="" disabled selected>Select Here</option>
-                            <option value="stu">Student</option>
-                            <option value="fs">Faculty Adminstration</option>
-                            <option value="md">Maintenance Department</option>
+                            <option value="Student">Student</option>
+                            <option value="Faculty Staff">Faculty Staff</option>
+                            <option value="Maintenance Department">Maintenance Department</option>
+                            <option value="Admin">Admin</option>
                         </select>
                     </div>
                     <div class="form-group ">
-                        <label for="phone">Phone</label>
-                        <input id="phone" type="text" name="phone" placeholder="+94" required>
+                        <label for="phone_number">Phone</label>
+                        <input id="phone_number" type="text" name="phone_number" placeholder="+94" required>
                     </div>
                 </div>
                 <div class="form-actions">
-                    <a href="{{ route('register') }}">
-                        <button type="submit" class="btn-login">NEXT</button>
-                    </a>
+                    <button type="submit" class="btn-login">REGISTER</button>
                 </div>
             </form>
         </div>

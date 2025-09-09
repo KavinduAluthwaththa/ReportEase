@@ -35,7 +35,10 @@ class User extends Authenticatable
         'created_at' => 'datetime',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
+    
+    // Override Laravel's default timestamp columns since our table only has created_at
+    const UPDATED_AT = null;
 
     // Relationships
     public function role()

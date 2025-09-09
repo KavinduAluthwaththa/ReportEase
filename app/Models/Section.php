@@ -11,9 +11,9 @@ class Section extends Model
 
     protected $table = 'Section';
     protected $primaryKey = 'section_id';
-    public $incrementing = false;
+    public $incrementing = true;
 
-    protected $fillable = ['section_id', 'section_name', 'description'];
+    protected $fillable = ['section_name', 'description'];
 
     protected $casts = [
         'section_id' => 'integer',

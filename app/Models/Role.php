@@ -11,9 +11,9 @@ class Role extends Model
 
     protected $table = 'Roles';
     protected $primaryKey = 'role_id';
-    public $incrementing = false;
+    public $incrementing = true;
 
-    protected $fillable = ['role_id', 'role_name'];
+    protected $fillable = ['role_name'];
 
     protected $casts = [
         'role_id' => 'integer',

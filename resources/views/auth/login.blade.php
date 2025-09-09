@@ -4,6 +4,23 @@
     <div class="auth-left">
         <div class="login-form">
             <h2>Sign in</h2>
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul style="color: red; margin: 10px 0;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+            @if (session('success'))
+                <div class="alert alert-success">
+                    <p style="color: green; margin: 10px 0;">{{ session('success') }}</p>
+                </div>
+            @endif
+            
             <form method="POST" action="{{ route('login.custom') }}">
                 @csrf
                 <div class="form-group">
