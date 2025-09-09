@@ -8,14 +8,22 @@ use App\Models\Issue;
 
 class IssueController extends Controller
 {
-    // Show all issues from all users
+    // Show all issues from all users with role-based filtering
     public function index()
     {
         try {
-            // Get all issues with user relationships
-            $reports = Issue::with(['user.role', 'assignee.role'])
-                           ->orderBy('reported_at', 'desc')
-                           ->get();
+            $role = session('user_role');
+            
+            // Role-based issue filtering
+            $query = Issue::with(['user.role', 'assignee.role']);
+            
+            // Only Students can only see issues that have been accepted by Faculty Staff
+            // Faculty Staff, Admin, and Maintenance Department can see all issues
+            if ($role === 'Student') {
+                $query->where('status', 'Accepted');
+            }
+            
+            $reports = $query->orderBy('reported_at', 'desc')->get();
             
             return view('shared.PostedIssues', compact('reports'));
         } catch (\Exception $e) {
@@ -86,7 +94,7 @@ class IssueController extends Controller
         $issue->title = $validated['title'];
         $issue->description = $validated['description'];
         $issue->location = $validated['location'];
-        $issue->status = 'pending';
+        $issue->status = 'Under Review';
         $issue->evidence = $evidencePath; // e.g., evidence/filename.jpg
         $issue->reported_by_user_id = auth()->id();
         $issue->reported_at = now();
@@ -116,6 +124,17 @@ class IssueController extends Controller
             $issue = Issue::with(['user.role', 'assignee.role'])
                           ->where('issue_id', $id)
                           ->firstOrFail();
+            
+            // Role-based access control
+            $role = session('user_role');
+            
+            // Only Students can only view issues that have been accepted
+            // Faculty Staff, Admin, and Maintenance Department can view all issues
+            if ($role === 'Student') {
+                if ($issue->status !== 'Accepted') {
+                    return redirect()->route('previous.reports')->with('error', 'You can only view accepted issues.');
+                }
+            }
             
             return view('shared.viewissues', compact('issue'));
         } catch (\Exception $e) {
@@ -193,7 +212,7 @@ class IssueController extends Controller
     {
         // Validate the request
         $request->validate([
-            'action' => 'required|string|in:accept,send_to_maintenance,change_request,reject',
+            'action' => 'required|string|in:accepted,under_review,being_resolved,resolved,rejected',
         ]);
 
         // Authorization: only allow certain roles to update status
@@ -203,16 +222,23 @@ class IssueController extends Controller
             return redirect()->back()->with('error', 'You are not authorized to update status.');
         }
 
+        // Role-based action validation
+        $action = $request->input('action');
+        if ($role === 'Faculty Staff' && !in_array($action, ['accepted', 'under_review', 'rejected'])) {
+            return redirect()->back()->with('error', 'Faculty Staff can only Accept, set to Under Review, or Reject issues.');
+        }
+
         try {
             // Find the issue by ID using the correct primary key
             $issue = Issue::where('issue_id', $id)->firstOrFail();
 
             // Map action to status
             $statusMap = [
-                'accept' => 'accepted',
-                'send_to_maintenance' => 'maintenance',
-                'change_request' => 'change_requested',
-                'reject' => 'rejected',
+                'accepted' => 'Accepted',
+                'under_review' => 'Under Review',
+                'being_resolved' => 'Being Resolved',
+                'resolved' => 'Resolved',
+                'rejected' => 'Rejected',
             ];
 
             // Update the issue status

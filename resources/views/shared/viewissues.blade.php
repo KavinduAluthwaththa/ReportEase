@@ -76,7 +76,7 @@
             $role = session('user_role');
             $canUpdateStatus = in_array($role, ['Admin', 'Faculty Staff', 'Maintenance Department']);
         @endphp
-        <p class="info-label">Issue Status: <span class="current-status">{{ $issue->status ?? 'Pending' }}</span></p>
+        <p class="info-label">Issue Status: <span class="current-status">{{ $issue->status ?? 'Under Review' }}</span></p>
         @if($canUpdateStatus)
             <form action="{{ route('issues.update', $issue->issue_id ?? 'T001') }}" method="POST">
                 @csrf
@@ -85,10 +85,18 @@
                         Select Action
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" type="submit" name="action" value="accept">Accept</button>
-                        <button class="dropdown-item" type="submit" name="action" value="send_to_maintenance">Send to Maintenance</button>
-                        <button class="dropdown-item" type="submit" name="action" value="change_request">Change Request</button>
-                        <button class="dropdown-item" type="submit" name="action" value="reject">Reject</button>
+                        @if($role === 'Faculty Staff')
+                            <button class="dropdown-item" type="submit" name="action" value="accepted">Accept</button>
+                            <button class="dropdown-item" type="submit" name="action" value="under_review">Under Review</button>
+                            <button class="dropdown-item" type="submit" name="action" value="rejected">Reject</button>
+                        @else
+                            <!-- Admin and Maintenance Department get full access -->
+                            <button class="dropdown-item" type="submit" name="action" value="accepted">Accept</button>
+                            <button class="dropdown-item" type="submit" name="action" value="under_review">Under Review</button>
+                            <button class="dropdown-item" type="submit" name="action" value="being_resolved">Being Resolved</button>
+                            <button class="dropdown-item" type="submit" name="action" value="resolved">Mark as Resolved</button>
+                            <button class="dropdown-item" type="submit" name="action" value="rejected">Reject</button>
+                        @endif
                     </div>
                 </div>
                 <br>

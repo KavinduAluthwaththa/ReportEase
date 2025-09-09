@@ -25,8 +25,8 @@
                     <td>IS{{ $report->issue_id ?? $report->id }}</td>
                     <td>{{ $report->title }}</td>
                     <td>
-                        <span class="status-badge status-{{ strtolower($report->status ?? 'pending') }}">
-                            {{ ucfirst($report->status ?? 'pending') }}
+                        <span class="status-badge status-{{ strtolower(str_replace(' ', '_', $report->status ?? 'under_review')) }}">
+                            {{ $report->status ?? 'Under Review' }}
                         </span>
                     </td>
                     <td>{{ $report->user->full_name ?? ($report->reporter->full_name ?? 'Unknown') }}</td>
