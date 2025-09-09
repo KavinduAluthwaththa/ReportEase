@@ -62,24 +62,16 @@ class IssueController extends Controller
     // Show create issue form
     public function create()
     {
-        $user = auth()->user();
-        $prefill = [
-            'full_name' => $user->full_name ?? '',
-            'email' => $user->email ?? '',
-            'ID' => $user->ID ?? '',
-        ];
-        return view('shared.CreateIssue', compact('prefill'));
+        return view('shared.CreateIssue');
     }
 
     // Store a newly created issue
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'registration_number' => 'required|string|max:50',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'location' => 'required|string|max:255',
             'evidence' => 'nullable|image|max:10240', // up to 10MB
         ]);
 
@@ -93,14 +85,11 @@ class IssueController extends Controller
         $issue = new Issue();
         $issue->title = $validated['title'];
         $issue->description = $validated['description'];
+        $issue->location = $validated['location'];
         $issue->status = 'pending';
         $issue->evidence = $evidencePath; // e.g., evidence/filename.jpg
         $issue->reported_by_user_id = auth()->id();
         $issue->reported_at = now();
-        // location optional; add to form if needed
-        if ($request->filled('location')) {
-            $issue->location = $request->input('location');
-        }
 
         $issue->save();
 

@@ -19,21 +19,6 @@
 			@csrf
 
 			<div class="form-group">
-				<label class="info-label">Reporter's Name with Initials</label>
-				<input type="text" name="full_name" class="form-control" placeholder="Your Name Here" value="{{ old('full_name', $prefill['full_name'] ?? '') }}" required>
-			</div>
-
-			<div class="form-group">
-				<label class="info-label">Reporter's Email Address</label>
-				<input type="email" name="email" class="form-control" placeholder="Your Email Here" value="{{ old('email', $prefill['email'] ?? '') }}" required>
-			</div>
-
-			<div class="form-group">
-				<label class="info-label">Reporter's Registration Number</label>
-				<input type="text" name="registration_number" class="form-control" placeholder="XXXXXXXXX" value="{{ old('registration_number', $prefill['ID'] ?? '') }}" required>
-			</div>
-
-			<div class="form-group">
 				<label class="info-label">Issue Title</label>
 				<input type="text" name="title" class="form-control" placeholder="XXXXXXXXXX" value="{{ old('title') }}" required>
 			</div>
@@ -41,6 +26,11 @@
 			<div class="form-group">
 				<label class="info-label">Issue Description</label>
 				<textarea name="description" class="form-control" placeholder="XXXXXXXXXX" rows="5" required>{{ old('description') }}</textarea>
+			</div>
+
+			<div class="form-group">
+				<label class="info-label">Location of the Issue</label>
+				<input type="text" name="location" class="form-control" placeholder="e.g., Building A, Room 101, Main Hall" value="{{ old('location') }}" required>
 			</div>
 
 			<div class="form-group" style="display:flex; align-items:center; gap:16px;">

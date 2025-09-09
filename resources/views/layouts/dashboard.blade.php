@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    {{-- Tailwind CSS has been removed --}}
 
-    {{-- Add Font Awesome for icons if needed, or use SVGs/images --}}
 </head>
 <body>
     <div class="app-container">
@@ -31,7 +29,7 @@
                     </div>
                     <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                         @csrf
-                        <button type="submit" class="nav-link logout-button">Logout</button>
+                        <button type="submit" class="nav-link">LOGOUT</button>
                     </form>
                 @endauth
             </nav>
@@ -70,10 +68,13 @@
                         </li>
                     </ul>
                 </nav>
-                <a href="{{ route('logout') }}" class="logout nav-link">
-                    <img src="{{ asset('images/logout.png') }}" alt="Logout" class="nav-icon">
-                    <span>Logout</span>
-                </a>
+                <form method="POST" action="{{ route('logout') }}" style="display: inline; width: 100%;">
+                    @csrf
+                    <button type="submit" class="logout nav-link" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer; padding: 0; display: flex; align-items: center; color: inherit; text-decoration: none;">
+                        <img src="{{ asset('images/logout.png') }}" alt="Logout" class="nav-icon">
+                        <span>Logout</span>
+                    </button>
+                </form>
             </aside>
 
             <!-- Main Content -->

@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Logout (needs to be authenticated to logout)
-    Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+    Route::match(['GET', 'POST'], '/logout', [AuthController::class, 'Logout'])->name('logout');
     
     // Dashboard routes
     Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.studash');
