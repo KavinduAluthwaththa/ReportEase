@@ -1,0 +1,120 @@
+.info-label {
+    color: #6c757d;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.info-value {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.issue-number {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.issue-title {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.issue-description {
+    font-size: 20px;
+    color: #6c757d;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+/* Container and layout styles */
+.issue-container {
+    width: 83.333333%; /* w-5/6 equivalent */
+    padding: 2.5rem; /* p-10 equivalent */
+}
+
+.issue-header {
+    font-size: 45px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.issue-title-main {
+    font-size: 30px;
+}
+
+.info-section {
+    margin-bottom: 25px;
+}
+
+.info-item {
+    margin-bottom: 20px;
+}
+
+/* Attachments styles */
+.attachment-container {
+    margin-bottom: 25px;
+}
+
+.attachment-thumbnails {
+    display: flex;
+    gap: 15px;
+}
+
+.attachment-item {
+    text-align: center;
+}
+
+.attachment-thumbnail {
+    width: 100px;
+    height: 80px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.attachment-thumbnail.gradient-1 {
+    background: linear-gradient(45deg, #00d4aa, #00a8ff);
+}
+
+.attachment-thumbnail.gradient-2 {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+}
+
+.attachment-icon {
+    color: white;
+    font-size: 20px;
+}
+
+.attachment-filename {
+    color: #6c757d;
+    font-size: 11px;
+}
+
+/* Form styles */
+.form-dropdown {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.dropdown-button {
+    min-width: 120px;
+    border-color: #6c757d;
+}
+
+.submit-button {
+    background-color: #ff6600;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 20%;
+    transition: background-color 0.3s ease;
+}

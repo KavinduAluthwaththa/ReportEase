@@ -1,9 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('content')
-    <div class="content">
-        <h1>Welcome to ReportEase</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus imperdiet sed id elementum. Quam vel aliquam sit vulputate. Faucibus nec gravida ipsum pulvinar vel.</p>
-        <a href="/register"><button>Get started</button></a>
+    <div class="main-wrapper">
+        <div class="sub-headline">A reporting system that</div>
+        <div class="headline">Streamlines Maintenance</div>
+        <div class="paragraph">Easily report issues and keep maintenance tasks organized quickly within the <br>
+            Faculty of Computing, Sabaragamuwa University of Sri Lanka.</div>
+        <a href="/register" class="get-started-btn">Get Started</a>
     </div>
 @endsection

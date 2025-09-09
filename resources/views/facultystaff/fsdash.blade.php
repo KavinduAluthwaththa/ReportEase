@@ -1,13 +1,14 @@
 @extends('layouts.dashboard')
 
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/fsdash.css') }}">
     <div class="welcome-section">
-        <h2>Welcome, <span class="highlight">{{ $student && $student->name ? explode(' ', $student->name)[0] : 'Student' }}!</span></h2>
+        <h2>Welcome, <span class="highlight">Samanalee!</span></h2>
 
         <div class="profile-card">
             <img src="{{ asset('images/user.png') }}" alt="Profile Picture">
-            <h3>{{ $student->name ?? 'Samanalee Fernando' }}</h3>
-            <p>Student</p>
+            <h3>Samanalee Fernando</h3>
+            <p>Faculty Staff</p>
         </div>
 
         <div class="action-buttons">

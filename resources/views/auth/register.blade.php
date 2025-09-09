@@ -1,53 +1,83 @@
 @extends('layouts.auth')
 
 @section('auth_content')
-        <div class="register-container">
+    <div class="auth-left">
+        <div class="login-form">
             <h2>Sign up to <span style="color: #e67e22;">ReportEase</span></h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <form method="POST" action="{{ route('register.custom') }}">
-                        @csrf
-
-                        <div class="form-group">
-                            <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First name" required autofocus>
-                        </div>
-
-                        <div class="form-group">
-                            <input id="last_name" type="text" class="form-control" name="last_name" placeholder="Last name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input id="email" type="email" class="form-control" name="email" placeholder="Your Email Here" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input id="registration_number" type="text" class="form-control" name="registration_number" placeholder="Registration Number (e.g., XXXXXXXX)" required>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select id="role" class="form-control" name="role" required>
-                                        <option value="" disabled selected>Select Your Role</option>
-                                        <option value="stu">Student</option>
-                                        <option value="fs">Faculty Adminstration</option>
-                                        <option value="md">Maintenance Department</option>
-                                    </select>
-                                </div>
-                                
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input id="phone" type="text" class="form-control" name="phone" placeholder="+94" required>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-button">
-                            NEXT
-                        </button>
-                    </form>
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul style="color: red; margin: 10px 0;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
+            @endif
+            
+            @if (session('success'))
+                <div class="alert alert-success">
+                    <p style="color: green; margin: 10px 0;">{{ session('success') }}</p>
+                </div>
+            @endif
+            
+            <form method="POST" action="{{ route('register.custom') }}">
+                @csrf
+                <div class="form-row">
+                    <div class="form-group ">
+                        <label for="first_name">First name</label>
+                        <input id="first_name" type="text" name="first_name" required autofocus>
+                    </div>
+                    <div class="form-group ">
+                        <label for="last_name">Last name</label>
+                        <input id="last_name" type="text" name="last_name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input id="email" type="email" name="email" placeholder="Your Email Here" required>
+                </div>
+                <div class="form-group">
+                    <label for="registration_number">Registration Number</label>
+                    <input id="registration_number" type="text" name="registration_number" placeholder="XXXXXXXX" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirm Password</label>
+                        <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group ">
+                        <label for="role">Select Your Role</label>
+                        <select id="role" name="role" required>
+                            <option value="" disabled selected>Select Here</option>
+                            <option value="Student">Student</option>
+                            <option value="Faculty Staff">Faculty Staff</option>
+                            <option value="Maintenance Department">Maintenance Department</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group ">
+                        <label for="phone_number">Phone</label>
+                        <input id="phone_number" type="text" name="phone_number" placeholder="+94" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-login">REGISTER</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="auth-right">
+        <div class="auth-background-image">
+            <div class="background-text">
+                <!--An Image goes here!-->
             </div>
         </div>
+    </div>
 @endsection

@@ -1,36 +1,50 @@
 @extends('layouts.auth')
 
 @section('auth_content')
-        <div class="register-container">
-            <h2>Login to <span style="color: #e67e22;">ReportEase</span></h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <form method="POST" action="{{ route('login.custom') }}">
-                        @csrf
-
-                        <div class="form-group">
-                            <input id="email" type="email" class="form-control" name="email" placeholder="Email Address" required>
-                        </div>
-
-                        <div class="form-group">
-                            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
-                        </div>
-
-                        <div class="form-group d-flex justify-content-between align-items-center">
-                            <button type="submit" class="submit-button">
-                                LOGIN
-                            </button>
-                            <a href="#">Forgot your password?</a>
-                        </div>
-                    </form>
-
-                    <div class="form-group">
-                        <p>Don't Have An Account ?</p>
-                        <a href="/register" class="submit-button-black">
-                            CREATE NEW ACCOUNT
-                        </a>
-                    </div>
+    <div class="auth-left">
+        <div class="login-form">
+            <h2>Sign in</h2>
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul style="color: red; margin: 10px 0;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
+            @endif
+            
+            @if (session('success'))
+                <div class="alert alert-success">
+                    <p style="color: green; margin: 10px 0;">{{ session('success') }}</p>
+                </div>
+            @endif
+            
+            <form method="POST" action="{{ route('login.custom') }}">
+                @csrf
+                <div class="form-group">
+                    <input id="email" type="email" name="email" placeholder="Email Address *" required>
+                </div>
+                <div class="form-group">
+                    <input id="password" type="password" name="password" placeholder="Password *" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-login">LOGIN</button>
+                    <a href="#" class="forgot-password">Forgot your password?</a>
+                </div>
+            </form>
+            <div class="create-account-section">
+                <p>Don't Have An Account ?</p>
+                <a href="/register" class="btn-create-account">CREATE NEW ACCOUNT</a>
             </div>
         </div>
+    </div>
+    <div class="auth-right">
+        <div class="auth-background-image">
+            <div class="background-text">
+                <!-- texts if need -->
+            </div>
+        </div>
+    </div>
 @endsection
