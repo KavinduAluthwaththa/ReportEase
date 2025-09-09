@@ -41,7 +41,6 @@
 					<label class="info-label" style="display:block;">Please upload an image, size less than 10MB</label>
 					<div class="custom-file">
 						<input type="file" name="evidence" class="custom-file-input" id="evidence">
-						<label class="custom-file-label" for="evidence">Choose File</label>
 					</div>
 				</div>
 			</div>

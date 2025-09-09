@@ -175,4 +175,9 @@
 .nav-icon {
     width: 20px;
     height: 20px;
+    transition: filter 0.3s ease;
+}
+
+.nav-link:hover .nav-icon {
+    filter: saturate(100%) invert(42%) sepia(92%) saturate(1685%) hue-rotate(17deg) brightness(104%) contrast(101%);
 }

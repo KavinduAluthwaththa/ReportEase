@@ -63,18 +63,11 @@
                         <li class="{{ Route::currentRouteName() == 'profile' ? 'active' : '' }}">
                             <a href="" class="nav-link">
                                 <img src="{{ asset('images/settings.png') }}" alt="Profile" class="nav-icon">
-                                <span>Profile</span>
+                                <span><b>Profile</b></span>
                             </a>
                         </li>
                     </ul>
                 </nav>
-                <form method="POST" action="{{ route('logout') }}" style="display: inline; width: 100%;">
-                    @csrf
-                    <button type="submit" class="logout nav-link" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer; padding: 0; display: flex; align-items: center; color: inherit; text-decoration: none;">
-                        <img src="{{ asset('images/logout.png') }}" alt="Logout" class="nav-icon">
-                        <span>Logout</span>
-                    </button>
-                </form>
             </aside>
 
             <!-- Main Content -->
