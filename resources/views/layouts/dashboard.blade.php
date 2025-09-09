@@ -43,7 +43,21 @@
                 <nav>
                     <ul>
                         <li class="{{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
-                            <a href="" class="nav-link">
+                            @php
+                                $role = session('user_role');
+                                if ($role === 'Student') {
+                                    $dashboardUrl = route('student.studash');
+                                } elseif ($role === 'Faculty Staff') {
+                                    $dashboardUrl = route('facultystaff.dashboard');
+                                } elseif ($role === 'Maintenance Department') {
+                                    $dashboardUrl = route('maintenancedep.dashboard');
+                                } elseif ($role === 'Admin') {
+                                    $dashboardUrl = route('all.pages');
+                                } else {
+                                    $dashboardUrl = route('welcome');
+                                }
+                            @endphp
+                            <a href="{{ $dashboardUrl }}" class="nav-link">
                                 <img src="{{ asset('images/home.png') }}" alt="Dashboard" class="nav-icon">
                                 <span class="nav-text">Dashboard</span>
                             </a>
@@ -68,6 +82,5 @@
             </main>
         </div>
     </div>
-    {{-- Add JS scripts here if needed --}}
 </body>
 </html>

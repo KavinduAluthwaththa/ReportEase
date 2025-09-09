@@ -124,8 +124,8 @@ Route::get('/maintenancedep/dashboard', function () {
     return view('maintenancedep.maintenancedepdash');
 })->name('maintenancedep.dashboard');
 
-// Previous Reports
-Route::get('/PostedIssues', [IssueController::class, 'postedIssues'])->name('previous.reports');
+// All Issues (Previously "Previous Reports")
+Route::get('/PostedIssues', [IssueController::class, 'index'])->name('previous.reports');
 
 // Shared View Issues
 Route::get('/shared/viewissues/{id}', [IssueController::class, 'showViewIssues'])->name('shared.viewissues');
@@ -148,5 +148,5 @@ Route::get('/shared/viewissues', function () {
 })->name('shared.viewissues.static');
 
 // Create Issue (form + submit)
-Route::get('shared/CreateIssue', [IssueController::class, 'create'])->name('issues.create');
+Route::get('shared/CreateIssue', [IssueController::class, 'create'])->name('issue.create');
 Route::post('shared/CreateIssue', [IssueController::class, 'store'])->name('issues.store');

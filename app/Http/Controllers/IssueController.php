@@ -8,6 +8,109 @@ use App\Models\Issue;
 
 class IssueController extends Controller
 {
+    // Show all issues from all users
+    public function index()
+    {
+        try {
+            // Get all issues with user relationships
+            $reports = Issue::with(['reporter.role', 'assignee'])
+                           ->orderBy('reported_at', 'desc')
+                           ->get();
+            
+            return view('shared.PostedIssues', compact('reports'));
+        } catch (\Exception $e) {
+            // Fallback with sample data when DB not ready
+            $reports = collect([
+                (object)[
+                    'issue_id' => 1,
+                    'id' => 1,
+                    'title' => 'Projector in NLH not working',
+                    'status' => 'pending',
+                    'reported_at' => now()->subDays(2),
+                    'user' => (object)[
+                        'full_name' => 'Samanalee Fernando',
+                        'role' => (object)['role_name' => 'Student']
+                    ]
+                ],
+                (object)[
+                    'issue_id' => 2,
+                    'id' => 2,
+                    'title' => 'Wi-Fi connectivity issues in Library',
+                    'status' => 'assigned',
+                    'reported_at' => now()->subDays(1),
+                    'user' => (object)[
+                        'full_name' => 'John Doe',
+                        'role' => (object)['role_name' => 'Faculty Staff']
+                    ]
+                ],
+                (object)[
+                    'issue_id' => 3,
+                    'id' => 3,
+                    'title' => 'Broken chair in Lecture Hall 2',
+                    'status' => 'resolved',
+                    'reported_at' => now()->subHours(12),
+                    'user' => (object)[
+                        'full_name' => 'Jane Smith',
+                        'role' => (object)['role_name' => 'Student']
+                    ]
+                ]
+            ]);
+            return view('shared.PostedIssues', compact('reports'));
+        }
+    }
+
+    // Show create issue form
+    public function create()
+    {
+        $user = auth()->user();
+        $prefill = [
+            'full_name' => $user->full_name ?? '',
+            'email' => $user->email ?? '',
+            'ID' => $user->ID ?? '',
+        ];
+        return view('shared.CreateIssue', compact('prefill'));
+    }
+
+    // Store a newly created issue
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'registration_number' => 'required|string|max:50',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'evidence' => 'nullable|image|max:10240', // up to 10MB
+        ]);
+
+        // Handle file upload
+        $evidencePath = null;
+        if ($request->hasFile('evidence')) {
+            $evidencePath = $request->file('evidence')->store('evidence', 'public');
+        }
+
+        // Persist issue
+        $issue = new Issue();
+        $issue->title = $validated['title'];
+        $issue->description = $validated['description'];
+        $issue->status = 'pending';
+        $issue->evidence = $evidencePath; // e.g., evidence/filename.jpg
+        $issue->reported_by_user_id = auth()->id();
+        $issue->reported_at = now();
+        // location optional; add to form if needed
+        if ($request->filled('location')) {
+            $issue->location = $request->input('location');
+        }
+
+        $issue->save();
+
+        // Redirect to the issue view page or previous reports
+        if (!empty($issue->issue_id)) {
+            return redirect()->route('shared.viewissues', $issue->issue_id)
+                             ->with('success', 'Issue submitted successfully.');
+        }
+        return redirect()->route('previous.reports')->with('success', 'Issue submitted successfully.');
+    }
     // Show a specific issue
     public function show($id)
     {
