@@ -17,10 +17,10 @@ class IssueController extends Controller
             // Role-based issue filtering
             $query = Issue::with(['user.role', 'assignee.role']);
             
-            // Only Students can only see issues that have been accepted by Faculty Staff
+            // Students can see all issues except resolved ones
             // Faculty Staff, Admin, and Maintenance Department can see all issues
             if ($role === 'Student') {
-                $query->where('status', 'Accepted');
+                $query->where('status', '!=', 'Resolved');
             }
             
             $reports = $query->orderBy('reported_at', 'desc')->get();
@@ -128,11 +128,11 @@ class IssueController extends Controller
             // Role-based access control
             $role = session('user_role');
             
-            // Only Students can only view issues that have been accepted
+            // Students can view all issues except resolved ones
             // Faculty Staff, Admin, and Maintenance Department can view all issues
             if ($role === 'Student') {
-                if ($issue->status !== 'Accepted') {
-                    return redirect()->route('previous.reports')->with('error', 'You can only view accepted issues.');
+                if ($issue->status === 'Resolved') {
+                    return redirect()->route('previous.reports')->with('error', 'You cannot view resolved issues.');
                 }
             }
             
