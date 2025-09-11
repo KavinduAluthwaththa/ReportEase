@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Section;
+use Illuminate\Support\Facades\DB;
 
 class SectionSeeder extends Seeder
 {
@@ -14,17 +14,10 @@ class SectionSeeder extends Seeder
      */
     public function run()
     {
-        $sections = [
-            ['section_name' => 'Faculty Administration', 'description' => 'Administrative section for faculty management'],
-            ['section_name' => 'Maintenance Department', 'description' => 'Technical maintenance and facility management'],
-            ['section_name' => 'Computer Science', 'description' => 'Computer Science department'],
-            ['section_name' => 'Engineering', 'description' => 'Engineering department'],
-            ['section_name' => 'Science', 'description' => 'Science department'],
-            ['section_name' => 'Business', 'description' => 'Business and management studies'],
-        ];
-
-        foreach ($sections as $section) {
-            Section::create($section);
-        }
+        DB::insert("INSERT IGNORE INTO Section (section_id, section_name, description) VALUES
+        (1, 'Electrical Maintenance', 'Handles electrical systems and wiring'),
+        (2, 'Mechanical Maintenance', 'Responsible for machinery and equipment'),
+        (3, 'Civil Works', 'Building infrastructure and structural repairs'),
+        (4, 'General Maintenance', 'General facility upkeep and repairs')");
     }
 }
