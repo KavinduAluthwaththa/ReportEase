@@ -1,7 +1,7 @@
 /* General Layout */
 .dashboard-container {
     display: flex;
-    height: 100vh;
+    min-height: inherit;
     font-family: Arial, sans-serif;
 }
 
