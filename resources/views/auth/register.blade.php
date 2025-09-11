@@ -53,13 +53,12 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group ">
-                        <label for="role">Select Your Role</label>
-                        <select id="role" name="role" required>
+                        <label for="role_id">Select Your Role</label>
+                        <select id="role_id" name="role_id" required>
                             <option value="" disabled selected>Select Here</option>
-                            <option value="Student">Student</option>
-                            <option value="Faculty Staff">Faculty Staff</option>
-                            <option value="Maintenance Department">Maintenance Department</option>
-                            <option value="Admin">Admin</option>
+                            @foreach(App\Models\Role::all() as $role)
+                                <option value="{{ $role->role_id }}">{{ $role->role_name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group ">

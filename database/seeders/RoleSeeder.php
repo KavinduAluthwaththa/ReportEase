@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -14,15 +14,10 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
-            ['role_name' => 'Admin'],
-            ['role_name' => 'Faculty Staff'],
-            ['role_name' => 'Maintenance Department'],
-            ['role_name' => 'Student'],
-        ];
-
-        foreach ($roles as $role) {
-            Role::create($role);
-        }
+        DB::insert("INSERT IGNORE INTO Roles (role_id, role_name) VALUES
+        (1, 'Admin'),
+        (2, 'Faculty Staff'),
+        (3, 'Maintenance Department'),
+        (4, 'Student')");
     }
 }

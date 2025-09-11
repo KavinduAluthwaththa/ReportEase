@@ -3,12 +3,12 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/fsdash.css') }}">
     <div class="welcome-section">
-        <h2>Welcome, <span class="highlight">Samanalee!</span></h2>
+        <h2>Welcome, <span class="highlight">{{ $user && $user->full_name ? explode(' ', $user->full_name)[0] : 'Faculty Member' }}!</span></h2>
 
         <div class="profile-card">
             <img src="{{ asset('images/user.png') }}" alt="Profile Picture">
-            <h3>Samanalee Fernando</h3>
-            <p>Faculty Staff</p>
+            <h3>{{ $user->full_name ?? 'Faculty Member' }}</h3>
+            <p class="role-badge">{{ $user->role->role_name ?? 'Faculty Staff' }}</p>
         </div>
 
         <div class="action-buttons">

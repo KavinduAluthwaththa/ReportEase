@@ -1,55 +1,62 @@
+/* Admin Dashboard Styles */
 .welcome-section {
     text-align: center;
     padding: 20px;
 }
 
 .welcome-section h2 {
-    font-size: 2.5rem; /* Equivalent to text-3xl */
-    font-weight: bold; /* Equivalent to font-bold */
+    font-size: 2.5rem;
+    font-weight: bold;
     margin-bottom: 1.5rem;
 }
 
 .highlight {
-    color: #e67e22; /* Specific color for the name */
+    color: #e67e22;
 }
 
 .profile-card {
-    background-color: #f3f4f6; /* bg-gray-100 */
-    border-radius: 0.75rem; /* rounded-xl */
-    padding: 1.5rem; /* p-6 */
+    background-color: #f3f4f6;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
     display: inline-block;
     margin-bottom: 1.5rem;
 }
 
 .profile-card img {
-    width: 6rem; /* w-24 */
-    height: 6rem; /* h-24 */
-    border-radius: 9999px; /* rounded-full */
-    margin: 0 auto 1rem auto; /* mx-auto mt-4 */
+    width: 6rem;
+    height: 6rem;
+    border-radius: 9999px;
+    margin: 0 auto 1rem auto;
     display: block;
 }
 
 .profile-card h3 {
-    font-size: 1.25rem; /* text-xl */
-    font-weight: 600; /* font-semibold */
+    font-size: 1.25rem;
+    font-weight: 600;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
     color: #333;
 }
 
 .profile-card p {
-    font-size: 0.875rem; /* text-sm */
-    color: #4b5563; /* text-gray-600 */
+    font-size: 0.875rem;
+    color: #4b5563;
     margin-bottom: 0;
 }
 
 .role-badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
+    background: #ff6600;
+    color: white;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
 }
 
 .action-buttons {
-    margin-top: 1.5rem; /* mt-6 */
+    margin-top: 1.5rem;
 }
 
 .action-buttons .btn {
@@ -62,7 +69,7 @@
 }
 
 .action-buttons .btn-primary {
-    background-color: #f60; /* Example Bootstrap primary color */
+    background-color: #f60;
     color: white;
     border: 1px solid #f60;
 }
@@ -73,7 +80,7 @@
 }
 
 .action-buttons .btn-secondary {
-    background-color: #6c757d; /* Example Bootstrap secondary color */
+    background-color: #6c757d;
     color: white;
     border: 1px solid #6c757d;
 }

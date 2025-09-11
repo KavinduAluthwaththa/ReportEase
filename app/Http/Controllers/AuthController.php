@@ -26,8 +26,17 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
             // Store user role/type in session for quick access in views
-            $user = auth()->user();
+            $user = auth()->user()->load('role'); // Eager load the role relationship
             $roleName = optional($user->role)->role_name;
+
+            // Debug: Log the role information
+            \Log::info('User login debug', [
+                'user_id' => $user->user_id,
+                'role_id' => $user->role_id,
+                'role_name' => $roleName,
+                'has_role_relation' => $user->role ? 'yes' : 'no'
+            ]);
+
             session([
                 'user_role' => $roleName,
                 'user_role_id' => $user->role_id ?? null,
@@ -42,12 +51,12 @@ class AuthController extends Controller
             } elseif ($roleName === 'Maintenance Department') {
                 $targetUrl = route('maintenancedep.dashboard');
             } elseif ($roleName === 'Admin') {
-                $targetUrl = route('all.pages');
+                $targetUrl = route('admin.dashboard');
             } else {
                 $targetUrl = route('welcome');
             }
 
-            return redirect()->intended($targetUrl)->withSuccess('You have successfully logged in');
+            return redirect($targetUrl)->withSuccess('You have successfully logged in');
         }
 
         // Authentication failed
@@ -83,7 +92,7 @@ class AuthController extends Controller
             'registration_number' => 'required|string|unique:Users,ID',
             'phone_number' => 'required|numeric|unique:Users,phone_number',
             'password' => 'required|min:6|confirmed',
-            'role' => 'required|string',
+            'role_id' => 'required|exists:Roles,role_id',
         ]);
 
         // Prepare data
@@ -106,7 +115,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:Users,email',
             'registration_number' => 'required|string|unique:Users,ID',
             'password' => 'required|min:6|confirmed',
-            'role' => 'required|string',
+            'role_id' => 'required|exists:Roles,role_id',
         ]);
 
         // Prepare data
@@ -121,21 +130,12 @@ class AuthController extends Controller
 
     public function create(array $data)
     {
-        // Map role name to role_id
-        $roleMapping = [
-            'Admin' => 1,
-            'Faculty Staff' => 2,
-            'Maintenance Department' => 3,
-            'Student' => 4,
-        ];
-
         return User::create([
             'full_name' => $data['name'],
             'email' => $data['email'],
             'ID' => $data['registration_number'],
             'password' => bcrypt($data['password']),
-            'role_id' => $roleMapping[$data['role']] ?? 4, // Default to Student
-            'section_id' => 1, // Default to Faculty Administration
+            'role_id' => $data['role_id'],
             'phone_number' => $data['phone_number'] ?? 1234567890,
         ]);
     }
@@ -153,8 +153,14 @@ class AuthController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
-        // This is just a placeholder. In a real application, you would send an email.
-        return back()->with('status', 'Password reset link sent!');
+
+        $status = \Illuminate\Support\Facades\Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === \Illuminate\Support\Facades\Password::RESET_LINK_SENT
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
     }
 
     //routes to welcomepage

@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-login">LOGIN</button>
-                    <a href="#" class="forgot-password">Forgot your password?</a>
+                    <a href="{{ route('password.request') }}" class="forgot-password">Forgot your password?</a>
                 </div>
             </form>
             <div class="create-account-section">
