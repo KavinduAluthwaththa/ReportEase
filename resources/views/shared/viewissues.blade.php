@@ -46,20 +46,17 @@
         <div class="attachment-container">
             <p class="info-label">Attachments</p>
             <div class="attachment-thumbnails">
-                @if(isset($issue->evidence) && $issue->evidence)
-                    <div class="attachment-item">
-                        <div class="attachment-thumbnail gradient-1">
-                            @php
-                                $isImage = in_array(strtolower(pathinfo($issue->evidence, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
-                            @endphp
-                            @if($isImage)
-                                <img src="{{ asset('storage/' . $issue->evidence) }}" alt="Evidence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                            @else
-                                <i class="fas fa-file attachment-icon"></i>
-                            @endif
+                @if(isset($issue->images) && $issue->images->count() > 0)
+                    @foreach($issue->images as $image)
+                        <div class="attachment-item">
+                            <div class="attachment-thumbnail">
+                                <a href="{{ asset('storage/' . $image->original_path) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $image->thumbnail_path) }}" alt="Evidence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                </a>
+                            </div>
+                            <small class="attachment-filename">{{ basename($image->original_path) }}</small>
                         </div>
-                        <small class="attachment-filename">{{ basename($issue->evidence) }}</small>
-                    </div>
+                    @endforeach
                 @else
                     <div class="attachment-item">
                         <div class="attachment-thumbnail gradient-1">
@@ -116,4 +113,3 @@
     <!-- Custom JavaScript for this page -->
     <script src="{{ asset('js/viewissues.js') }}"></script>
 @stop
-

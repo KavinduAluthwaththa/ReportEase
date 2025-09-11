@@ -52,4 +52,9 @@ class Issue extends Model
     {
         return $this->hasMany(IssueUpvote::class, 'issue_id', 'issue_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(IssueImage::class, 'issue_id', 'issue_id');
+    }
 }

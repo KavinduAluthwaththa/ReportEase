@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Issue;
+use App\Models\IssueImage;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class IssueController extends Controller
 {
@@ -80,30 +84,50 @@ class IssueController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string|max:255',
-            'evidence' => 'nullable|image|max:10240', // up to 10MB
+            'evidence' => 'nullable|array|max:3',
+            'evidence.*' => 'image|mimes:jpg,jpeg,png|max:2048', // up to 2MB per image
         ]);
 
-        // Handle file upload
-        $evidencePath = null;
-        if ($request->hasFile('evidence')) {
-            $evidencePath = $request->file('evidence')->store('evidence', 'public');
-        }
-
-        // Persist issue
+        // Persist issue first
         $issue = new Issue();
         $issue->title = $validated['title'];
         $issue->description = $validated['description'];
         $issue->location = $validated['location'];
         $issue->status = 'Under Review';
-        $issue->evidence = $evidencePath; // e.g., evidence/filename.jpg
         $issue->reported_by_user_id = auth()->id();
         $issue->reported_at = now();
-
         $issue->save();
+
+        // Handle multiple image uploads
+        if ($request->hasFile('evidence')) {
+            foreach ($request->file('evidence') as $image) {
+                // Store original image
+                $originalPath = $image->store('evidence', 'public');
+
+                // Generate thumbnail (200x200)
+                $thumbnail = Image::make($image)->resize(200, 200, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                // Create thumbnail filename with random string for security
+                $thumbnailFilename = 'thumbnails/' . Str::random(40) . '.' . $image->extension();
+                $thumbnailPath = 'evidence/' . $thumbnailFilename;
+
+                // Save thumbnail to storage
+                Storage::disk('public')->put($thumbnailPath, $thumbnail->stream());
+
+                // Save image paths to database
+                IssueImage::create([
+                    'issue_id' => $issue->issue_id,
+                    'original_path' => $originalPath,
+                    'thumbnail_path' => $thumbnailPath
+                ]);
+            }
+        }
 
         // Redirect to appropriate dashboard based on user role
         $role = session('user_role');
-        
+
         if ($role === 'Student') {
             return redirect()->route('student.studash')->with('success', 'Issue submitted successfully.');
         } elseif ($role === 'Faculty Staff') {
@@ -121,7 +145,7 @@ class IssueController extends Controller
     {
         try {
             // Find the issue with relationships loaded
-            $issue = Issue::with(['user.role', 'assignee.role'])
+            $issue = Issue::with(['user.role', 'assignee.role', 'images'])
                           ->where('issue_id', $id)
                           ->firstOrFail();
             
