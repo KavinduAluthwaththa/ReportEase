@@ -38,10 +38,12 @@
 					<i class="fas fa-image" style="font-size:24px; color:#999;"></i>
 				</div>
 				<div style="flex:1;">
-					<label class="info-label" style="display:block;">Please upload an image, size less than 10MB</label>
+					<label class="info-label" style="display:block;">Upload up to 3 evidence images (JPG/PNG, max 2MB each)</label>
 					<div class="custom-file">
-						<input type="file" name="evidence" class="custom-file-input" id="evidence">
+						<input type="file" name="evidence[]" class="custom-file-input" id="evidence" multiple accept=".jpg,.jpeg,.png">
+						<label class="custom-file-label" for="evidence">Choose files...</label>
 					</div>
+					<small class="form-text text-muted">You can select multiple images (max 3)</small>
 				</div>
 			</div>
 
@@ -58,12 +60,20 @@ document.addEventListener('DOMContentLoaded', function() {
 	var input = document.getElementById('evidence');
 	if (input) {
 		input.addEventListener('change', function(e) {
-			var fileName = e.target.files && e.target.files.length ? e.target.files[0].name : 'Choose File';
+			var files = e.target.files;
 			var label = document.querySelector('label.custom-file-label[for="evidence"]');
-			if (label) label.textContent = fileName;
+
+			if (files && files.length > 0) {
+				if (files.length === 1) {
+					label.textContent = files[0].name;
+				} else {
+					label.textContent = files.length + ' files selected';
+				}
+			} else {
+				label.textContent = 'Choose files...';
+			}
 		});
 	}
 });
 </script>
 @endpush
-
