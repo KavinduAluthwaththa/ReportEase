@@ -42,7 +42,7 @@ class AuthController extends Controller
             } elseif ($roleName === 'Maintenance Department') {
                 $targetUrl = route('maintenancedep.dashboard');
             } elseif ($roleName === 'Admin') {
-                $targetUrl = route('all.pages');
+                $targetUrl = route('admin.dashboard');
             } else {
                 $targetUrl = route('welcome');
             }

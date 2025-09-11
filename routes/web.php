@@ -87,12 +87,9 @@ Route::middleware(['auth'])->group(function () {
     
     // Dashboard routes
     Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.studash');
-    Route::get('/facultystaff/dashboard', function () {
-        return view('facultystaff.fsdash');
-    })->name('facultystaff.dashboard');
-    Route::get('/maintenancedep/dashboard', function () {
-        return view('maintenancedep.maintenancedepdash');
-    })->name('maintenancedep.dashboard');
+    Route::get('/facultystaff/dashboard', [DashboardController::class, 'facultyStaffDashboard'])->name('facultystaff.dashboard');
+    Route::get('/maintenancedep/dashboard', [DashboardController::class, 'maintenanceDashboard'])->name('maintenancedep.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
     
     // Issue Management routes
     Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');

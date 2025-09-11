@@ -50,7 +50,7 @@
                                 } elseif ($role === 'Maintenance Department') {
                                     $dashboardUrl = route('maintenancedep.dashboard');
                                 } elseif ($role === 'Admin') {
-                                    $dashboardUrl = route('all.pages');
+                                    $dashboardUrl = route('admin.dashboard');
                                 } else {
                                     $dashboardUrl = route('welcome');
                                 }
