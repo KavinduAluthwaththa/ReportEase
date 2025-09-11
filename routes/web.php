@@ -32,15 +32,11 @@ Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->
 Route::get('/recovery-email-sent', function () {
     return view('auth.recovery');
 });
-Route::get('/reset-password/{token}', function ($token) {
-    return view('auth.passwords.reset', ['token' => $token]);
-})->name('passwords.reset');
-Route::get('/reset-password-dev', function () {
-    return view('auth.passwords.reset', ['token' => null]);
-})->name('password.reset.dev');
-Route::post('/reset-password', function (Illuminate\Http\Request $request) {
-    return redirect('/login')->with('status', 'Password has been reset!');
-})->name('password.update');
+Route::get('/reset-password/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])
+    ->name('password.update');
 
 // Protected routes (authentication required)
 Route::middleware(['auth'])->group(function () {
