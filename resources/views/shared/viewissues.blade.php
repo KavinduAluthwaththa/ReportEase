@@ -54,7 +54,6 @@
                                     <img src="{{ asset('storage/' . $image->thumbnail_path) }}" alt="Evidence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                                 </a>
                             </div>
-                            <small class="attachment-filename">{{ basename($image->original_path) }}</small>
                         </div>
                     @endforeach
                 @else
