@@ -76,4 +76,18 @@ class User extends Authenticatable implements CanResetPassword
     {
         return $this->hasMany(Notify::class, 'receiver_id', 'user_id');
     }
+
+    // Accessor for first name
+    public function getFirstNameAttribute()
+    {
+        $names = explode(' ', $this->full_name, 2);
+        return $names[0] ?? '';
+    }
+
+    // Accessor for last name
+    public function getLastNameAttribute()
+    {
+        $names = explode(' ', $this->full_name, 2);
+        return $names[1] ?? '';
+    }
 }

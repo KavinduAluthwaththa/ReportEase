@@ -168,4 +168,37 @@ class AuthController extends Controller
     {
         return view('welcome');
     }
+    
+    //show settings page
+    public function showSettings()
+    {
+        $user = auth()->user();
+        return view('settings.settings', compact('user'));
+    }
+    
+    //update user settings
+    public function updateSettings(Request $request)
+    {
+        $user = auth()->user();
+        
+        // Validate the request - only allow editing of certain fields
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone_number' => 'required|numeric|unique:Users,phone_number,' . $user->user_id . ',user_id',
+            'email' => 'required|email|unique:Users,email,' . $user->user_id . ',user_id',
+        ]);
+        
+        // Combine first and last name into full_name
+        $fullName = trim($request->full_name . ' ' . $request->last_name);
+        
+        // Update only editable fields
+        $user->update([
+            'full_name' => $fullName,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+        ]);
+        
+        return redirect()->route('settings')->with('success', 'Profile updated successfully!');
+    }
 }
