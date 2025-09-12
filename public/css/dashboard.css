@@ -1,7 +1,7 @@
 /* General Layout */
 .dashboard-container {
     display: flex;
-    height: 100vh;
+    min-height: inherit;
     font-family: Arial, sans-serif;
 }
 
@@ -36,11 +36,6 @@
     text-decoration: none;
     color: #444;
     font-weight: 500;
-}
-
-.sidebar .nav-text{
-    color: #ff6600;
-    font-weight: 600;
 }
 
 
@@ -121,6 +116,11 @@
     color: #6b7280;
 }
 
+.role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+}
+
 /* Buttons */
 .action-buttons {
     display: flex;
@@ -166,16 +166,49 @@
     font-size: medium;
     transition: background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
+    color: #888; /* Default ash color for inactive links */
 }
 
 .nav-link:hover {
     color: #ff6600;
 }
 
+/* Active navigation item styling */
+.sidebar ul li.active .nav-link {
+    color: #ff6600;
+}
+
+.sidebar ul li.active .nav-link .nav-text,
+.sidebar ul li.active .nav-link span {
+    color: #ff6600;
+    font-weight: 600;
+}
+
+/* Inactive navigation items */
+.sidebar ul li:not(.active) .nav-link {
+    color: #888;
+}
+
+.sidebar ul li:not(.active) .nav-link .nav-text,
+.sidebar ul li:not(.active) .nav-link span {
+    color: #888;
+    font-weight: 500;
+}
+
 .nav-icon {
     width: 20px;
     height: 20px;
     transition: filter 0.3s ease;
+}
+
+/* Active icon styling */
+.sidebar ul li.active .nav-icon {
+    filter: saturate(100%) invert(42%) sepia(92%) saturate(1685%) hue-rotate(17deg) brightness(104%) contrast(101%);
+}
+
+/* Inactive icon styling */
+.sidebar ul li:not(.active) .nav-icon {
+    filter: saturate(0%) brightness(0.5);
 }
 
 .nav-link:hover .nav-icon {

@@ -19,14 +19,21 @@ CREATE TABLE `Issues`(
     `issue_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(255) NOT NULL,
     `description` TEXT NOT NULL,
-    `evidence` BLOB NOT NULL,
     `location` VARCHAR(255) NOT NULL,
     `status` VARCHAR(255) NOT NULL,
-    `assigned_to_user_id` INT NULL,
-    `reported_by_user_id` INT NOT NULL,
+    `assigned_to_user_id` INT UNSIGNED NULL,
+    `reported_by_user_id` INT UNSIGNED NOT NULL,
     `reported_at` TIMESTAMP NOT NULL,
     `resolved_at` TIMESTAMP NULL,
     `upVotes` INT NULL
+);
+CREATE TABLE `issue_images`(
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `issue_id` INT UNSIGNED NOT NULL,
+    `original_path` VARCHAR(255) NOT NULL,
+    `thumbnail_path` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP NULL,
+    `updated_at` TIMESTAMP NULL
 );
 CREATE TABLE `Roles`(
     `role_id` INT UNSIGNED NOT NULL,
@@ -88,3 +95,5 @@ ALTER TABLE
     `Users` ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY(`role_id`) REFERENCES `Roles`(`role_id`);
 ALTER TABLE
     `Issue_Upvote` ADD CONSTRAINT `issue_upvote_issue_id_foreign` FOREIGN KEY(`issue_id`) REFERENCES `Issues`(`issue_id`);
+ALTER TABLE
+    `issue_images` ADD CONSTRAINT `issue_images_issue_id_foreign` FOREIGN KEY(`issue_id`) REFERENCES `Issues`(`issue_id`);

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWadProjectSchema extends Migration
+class CreateCompleteWadProjectSchema extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,33 @@ class CreateWadProjectSchema extends Migration
      */
     public function up()
     {
+        // Create password_resets table
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+
+        // Create failed_jobs table
+        Schema::create('failed_jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->text('connection');
+            $table->text('queue');
+            $table->longText('payload');
+            $table->longText('exception');
+            $table->timestamp('failed_at')->useCurrent();
+        });
+
         // Create Roles table first (referenced by Users)
         Schema::create('Roles', function (Blueprint $table) {
-            $table->increments('role_id'); // Changed to auto-incrementing primary key
+            $table->increments('role_id');
             $table->string('role_name');
         });
 
         // Create Section table (referenced by Users)
         Schema::create('Section', function (Blueprint $table) {
-            $table->increments('section_id'); // Changed to auto-incrementing primary key
+            $table->increments('section_id');
             $table->string('section_name');
             $table->text('description');
         });
@@ -48,13 +66,13 @@ class CreateWadProjectSchema extends Migration
             $table->foreign('section_id')->references('section_id')->on('Section');
         });
 
-        // Create Issues table
+        // Create Issues table (with final schema including nullable evidence and location)
         Schema::create('Issues', function (Blueprint $table) {
             $table->increments('issue_id');
             $table->string('title');
             $table->text('description');
-            $table->binary('evidence');
-            $table->string('location');
+            $table->string('evidence')->nullable(); // Made nullable as per latest migration
+            $table->string('location')->nullable(); // Made nullable as per latest migration
             $table->string('status');
             $table->unsignedInteger('assigned_to_user_id')->nullable();
             $table->unsignedInteger('reported_by_user_id');
@@ -125,5 +143,7 @@ class CreateWadProjectSchema extends Migration
         Schema::dropIfExists('Users');
         Schema::dropIfExists('Section');
         Schema::dropIfExists('Roles');
+        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('password_resets');
     }
 }

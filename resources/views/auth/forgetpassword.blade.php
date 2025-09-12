@@ -10,7 +10,9 @@
                 {{ session('status') }}
             </div>
             <script>
-                window.location.href = "/password/sent";
+                setTimeout(function() {
+                    window.location.href = "{{ route('login') }}";
+                }, 3000);
             </script>
         @endif
 

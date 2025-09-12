@@ -32,15 +32,11 @@ Route::post('/forget-password', [AuthController::class, 'sendResetLinkEmail'])->
 Route::get('/recovery-email-sent', function () {
     return view('auth.recovery');
 });
-Route::get('/reset-password/{token}', function ($token) {
-    return view('auth.passwords.reset', ['token' => $token]);
-})->name('passwords.reset');
-Route::get('/reset-password-dev', function () {
-    return view('auth.passwords.reset', ['token' => null]);
-})->name('password.reset.dev');
-Route::post('/reset-password', function (Illuminate\Http\Request $request) {
-    return redirect('/login')->with('status', 'Password has been reset!');
-})->name('password.update');
+Route::get('/reset-password/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])
+    ->name('password.update');
 
 // Protected routes (authentication required)
 Route::middleware(['auth'])->group(function () {
@@ -87,12 +83,9 @@ Route::middleware(['auth'])->group(function () {
     
     // Dashboard routes
     Route::get('/student/dashboard', [DashboardController::class, 'index'])->name('student.studash');
-    Route::get('/facultystaff/dashboard', function () {
-        return view('facultystaff.fsdash');
-    })->name('facultystaff.dashboard');
-    Route::get('/maintenancedep/dashboard', function () {
-        return view('maintenancedep.maintenancedepdash');
-    })->name('maintenancedep.dashboard');
+    Route::get('/facultystaff/dashboard', [DashboardController::class, 'facultyStaffDashboard'])->name('facultystaff.dashboard');
+    Route::get('/maintenancedep/dashboard', [DashboardController::class, 'maintenanceDashboard'])->name('maintenancedep.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
     
     // Issue Management routes
     Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
@@ -122,5 +115,9 @@ Route::middleware(['auth'])->group(function () {
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('report');
     Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
+    
+    // Settings/Profile routes
+    Route::get('/settings', [AuthController::class, 'showSettings'])->name('settings');
+    Route::post('/settings', [AuthController::class, 'updateSettings'])->name('settings.update');
 
 });

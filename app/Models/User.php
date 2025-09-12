@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\CanResetPassword;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPassword
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, \Illuminate\Auth\Passwords\CanResetPassword;
 
     protected $table = 'Users';
     protected $primaryKey = 'user_id';
@@ -74,5 +75,19 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany(Notify::class, 'receiver_id', 'user_id');
+    }
+
+    // Accessor for first name
+    public function getFirstNameAttribute()
+    {
+        $names = explode(' ', $this->full_name, 2);
+        return $names[0] ?? '';
+    }
+
+    // Accessor for last name
+    public function getLastNameAttribute()
+    {
+        $names = explode(' ', $this->full_name, 2);
+        return $names[1] ?? '';
     }
 }

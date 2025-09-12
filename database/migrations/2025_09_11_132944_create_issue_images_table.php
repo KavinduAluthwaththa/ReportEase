@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIssuesTable extends Migration
+class CreateIssueImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateIssuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('issues', function (Blueprint $table) {
+        Schema::create('issue_images', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('registration_number');
-            $table->string('title');
-            $table->text('description');
-            $table->string('image_path')->nullable();
+            $table->unsignedInteger('issue_id');
+            $table->string('original_path');
+            $table->string('thumbnail_path');
             $table->timestamps();
+
+            $table->foreign('issue_id')->references('issue_id')->on('Issues');
         });
     }
 
@@ -32,6 +31,6 @@ class CreateIssuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('issues');
+        Schema::dropIfExists('issue_images');
     }
 }
