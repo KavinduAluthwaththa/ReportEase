@@ -41,9 +41,7 @@
 					<label class="info-label" style="display:block;">Upload up to 3 evidence images (JPG/PNG, max 2MB each)</label>
 					<div class="custom-file">
 						<input type="file" name="evidence[]" class="custom-file-input" id="evidence" multiple accept=".jpg,.jpeg,.png">
-						<label class="custom-file-label" for="evidence">Choose files...</label>
 					</div>
-					<small class="form-text text-muted">You can select multiple images (max 3)</small>
 				</div>
 			</div>
 

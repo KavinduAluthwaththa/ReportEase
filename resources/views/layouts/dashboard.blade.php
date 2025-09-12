@@ -40,7 +40,7 @@
             <aside class="sidebar">
                 <nav>
                     <ul>
-                        <li class="{{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
+                        <li class="{{ in_array(Route::currentRouteName(), ['student.studash', 'facultystaff.dashboard', 'maintenancedep.dashboard', 'admin.dashboard', 'dashboard']) ? 'active' : '' }}">
                             @php
                                 $role = session('user_role');
                                 if ($role === 'Student') {
@@ -57,13 +57,13 @@
                             @endphp
                             <a href="{{ $dashboardUrl }}" class="nav-link">
                                 <img src="{{ asset('images/home.png') }}" alt="Dashboard" class="nav-icon">
-                                <span class="nav-text">Dashboard</span>
+                                <span class="nav-text"><b>Dashboard</b></span>
                             </a>
                         </li>
-                        <li class="{{ Route::currentRouteName() == 'profile' ? 'active' : '' }}">
-                            <a href="" class="nav-link">
-                                <img src="{{ asset('images/settings.png') }}" alt="Profile" class="nav-icon">
-                                <span><b>Profile</b></span>
+                        <li class="{{ Route::currentRouteName() == 'settings' ? 'active' : '' }}">
+                            <a href="{{ route('settings') }}" class="nav-link">
+                                <img src="{{ asset('images/settings.png') }}" alt="Settings" class="nav-icon">
+                                <span><b>Setting</b></span>
                             </a>
                         </li>
                     </ul>
