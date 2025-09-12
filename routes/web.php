@@ -115,5 +115,9 @@ Route::middleware(['auth'])->group(function () {
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('report');
     Route::get('/report/{id}', [ReportController::class, 'show'])->name('report.show');
+    
+    // Settings/Profile routes
+    Route::get('/settings', [AuthController::class, 'showSettings'])->name('settings');
+    Route::post('/settings', [AuthController::class, 'updateSettings'])->name('settings.update');
 
 });
