@@ -36,7 +36,7 @@
 			</div>
 
 			<div class="form-group">
-				<label class="info-label">Upload up to 3 evidence images (JPG/PNG, max 2MB each)</label>
+				<label class="info-label">Upload an Image for Evidence  (JPG/PNG, max 2MB each)</label>
 				<div class="file-upload-container">
 					<input type="file" name="evidence[]" id="evidence" multiple accept=".jpg,.jpeg,.png" class="file-input">
 					<label for="evidence" class="file-upload-area">
@@ -66,133 +66,166 @@
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-	var input = document.getElementById('evidence');
-	var uploadArea = document.querySelector('.file-upload-area');
-	var fileList = document.getElementById('fileList');
-
-	console.log('Elements found:', {input: !!input, uploadArea: !!uploadArea, fileList: !!fileList});
-
-	if (input && uploadArea && fileList) {
-		// Handle file selection
-		input.addEventListener('change', function(e) {
-			console.log('Files selected:', e.target.files.length);
-			displayFiles(e.target.files);
-		});
-
-		// Handle drag and drop
-		uploadArea.addEventListener('dragover', function(e) {
-			e.preventDefault();
-			uploadArea.classList.add('dragover');
-		});
-
-		uploadArea.addEventListener('dragleave', function(e) {
-			e.preventDefault();
-			uploadArea.classList.remove('dragover');
-		});
-
-		uploadArea.addEventListener('drop', function(e) {
-			e.preventDefault();
-			uploadArea.classList.remove('dragover');
-			input.files = e.dataTransfer.files;
-			displayFiles(e.dataTransfer.files);
-		});
-
-		function displayFiles(files) {
-			console.log('Displaying files:', files.length);
-			fileList.innerHTML = '';
-			if (files && files.length > 0) {
-				for (let i = 0; i < files.length; i++) {
-					const file = files[i];
-					createFilePreview(file, i);
-				}
-			}
-		}
-
-		function createFilePreview(file, index) {
-			console.log('Creating preview for:', file.name, file.type);
-			const fileItem = document.createElement('div');
-			fileItem.className = 'file-item';
-			
-			// Check if file is an image
-			if (file.type.startsWith('image/')) {
-				const reader = new FileReader();
-				reader.onload = function(e) {
-					fileItem.innerHTML = `
-						<div class="file-preview-container">
-							<img src="${e.target.result}" alt="Preview" class="file-preview-image">
-						</div>
-						<div class="file-info">
-							<div class="file-details">
-								<span class="file-name">${file.name}</span>
-								<span class="file-size">${formatFileSize(file.size)}</span>
-							</div>
-							<button type="button" class="file-remove" onclick="removeFile(${index})">
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-									<line x1="18" y1="6" x2="6" y2="18"></line>
-									<line x1="6" y1="6" x2="18" y2="18"></line>
-								</svg>
-							</button>
-						</div>
-					`;
-				};
-				reader.readAsDataURL(file);
-			} else {
-				// Non-image file
-				fileItem.innerHTML = `
-					<svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-						<polyline points="14,2 14,8 20,8"></polyline>
-						<line x1="16" y1="13" x2="8" y2="13"></line>
-						<line x1="16" y1="17" x2="8" y2="17"></line>
-					</svg>
-					<div class="file-info">
-						<div class="file-details">
-							<span class="file-name">${file.name}</span>
-							<span class="file-size">${formatFileSize(file.size)}</span>
-						</div>
-						<button type="button" class="file-remove" onclick="removeFile(${index})">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<line x1="18" y1="6" x2="6" y2="18"></line>
-								<line x1="6" y1="6" x2="18" y2="18"></line>
-							</svg>
-						</button>
-					</div>
-				`;
-			}
-			
-			fileList.appendChild(fileItem);
-		}
-
-		function formatFileSize(bytes) {
-			if (bytes === 0) return '0 Bytes';
-			const k = 1024;
-			const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-			const i = Math.floor(Math.log(bytes) / Math.log(k));
-			return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-		}
-
-		// Make displayFiles globally accessible for removeFile function
-		window.displayFiles = displayFiles;
-	}
-
-	// Global function for removing files
-	window.removeFile = function(index) {
-		console.log('Removing file at index:', index);
-		const input = document.getElementById('evidence');
-		const files = Array.from(input.files);
-		files.splice(index, 1);
-		
-		// Create new FileList
-		const dt = new DataTransfer();
-		files.forEach(file => dt.items.add(file));
-		input.files = dt.files;
-		
-		// Refresh display
-		if (window.displayFiles) {
-			window.displayFiles(input.files);
-		}
-	};
-});
+// Ensure DOM is ready and run immediately
+(function() {
+    'use strict';
+    
+    function initFileUpload() {
+        console.log('Initializing file upload...');
+        
+        const input = document.getElementById('evidence');
+        const uploadArea = document.querySelector('.file-upload-area');
+        const fileList = document.getElementById('fileList');
+        
+        console.log('Elements check:', {
+            input: input ? 'found' : 'not found',
+            uploadArea: uploadArea ? 'found' : 'not found', 
+            fileList: fileList ? 'found' : 'not found'
+        });
+        
+        if (!input || !uploadArea || !fileList) {
+            console.error('Required elements not found');
+            return;
+        }
+        
+        // Handle file selection
+        input.addEventListener('change', function(e) {
+            console.log('File change event triggered, files:', e.target.files.length);
+            handleFiles(e.target.files);
+        });
+        
+        // Handle drag and drop
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            input.files = files;
+            handleFiles(files);
+        });
+        
+        function handleFiles(files) {
+            console.log('Handling files:', files.length);
+            
+            // Clear previous previews
+            fileList.innerHTML = '';
+            
+            if (!files || files.length === 0) {
+                console.log('No files to display');
+                return;
+            }
+            
+            // Process each file
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                console.log('Processing file:', file.name, file.type, file.size);
+                createPreview(file, i);
+            }
+        }
+        
+        function createPreview(file, index) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.style.marginBottom = '12px';
+            
+            console.log('Creating preview for:', file.name, 'Type:', file.type);
+            
+            if (file.type && file.type.startsWith('image/')) {
+                console.log('Processing as image');
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log('FileReader loaded successfully');
+                    
+                    fileItem.innerHTML = `
+                        <div class="file-preview-container">
+                            <img src="${e.target.result}" alt="Preview of ${file.name}" class="file-preview-image" style="max-width: 100%; height: auto;">
+                        </div>
+                        <div class="file-info">
+                            <div class="file-details">
+                                <span class="file-name">${file.name}</span>
+                                <span class="file-size">${formatBytes(file.size)}</span>
+                            </div>
+                            <button type="button" class="file-remove" onclick="removeFileAtIndex(${index})" style="margin-left: 10px;">
+                                ✕
+                            </button>
+                        </div>
+                    `;
+                };
+                
+                reader.onerror = function() {
+                    console.error('FileReader error for:', file.name);
+                };
+                
+                reader.readAsDataURL(file);
+            } else {
+                console.log('Processing as non-image file');
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-details">
+                            <span>📄</span>
+                            <span class="file-name">${file.name}</span>
+                            <span class="file-size">${formatBytes(file.size)}</span>
+                        </div>
+                        <button type="button" class="file-remove" onclick="removeFileAtIndex(${index})">
+                            ✕
+                        </button>
+                    </div>
+                `;
+            }
+            
+            fileList.appendChild(fileItem);
+            console.log('Preview added to DOM');
+        }
+        
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Make functions globally available
+        window.handleFiles = handleFiles;
+        window.formatBytes = formatBytes;
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFileUpload);
+    } else {
+        initFileUpload();
+    }
+    
+    // Global function for removing files
+    window.removeFileAtIndex = function(index) {
+        console.log('Removing file at index:', index);
+        const input = document.getElementById('evidence');
+        if (!input || !input.files) return;
+        
+        const filesArray = Array.from(input.files);
+        filesArray.splice(index, 1);
+        
+        // Create new FileList
+        const dt = new DataTransfer();
+        filesArray.forEach(file => dt.items.add(file));
+        input.files = dt.files;
+        
+        // Refresh display
+        if (window.handleFiles) {
+            window.handleFiles(input.files);
+        }
+    };
+})();
 </script>
 @endpush

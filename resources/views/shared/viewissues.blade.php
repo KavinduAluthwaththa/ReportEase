@@ -45,25 +45,37 @@
         <!-- Attachments Section -->
         <div class="attachment-container">
             <p class="info-label">Attachments</p>
-            <div class="attachment-thumbnails">
+            <div class="attachment-grid">
                 @if(isset($issue->images) && $issue->images->count() > 0)
-                    @foreach($issue->images as $image)
+                    @foreach($issue->images as $index => $image)
                         <div class="attachment-item">
-                            <div class="attachment-thumbnail">
-                                <a href="{{ asset('storage/' . $image->original_path) }}" target="_blank">
-                                    <img src="{{ asset('storage/' . $image->thumbnail_path) }}" alt="Evidence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-                                </a>
+                            <div class="attachment-thumbnail-43" onclick="openImageModal('{{ asset('storage/' . $image->original_path) }}', 'Evidence Image {{ $index + 1 }}')">
+                                <img src="{{ asset('storage/' . $image->thumbnail_path) }}" alt="Evidence Image {{ $index + 1 }}" class="attachment-image">
+                                <div class="attachment-overlay">
+                                    <i class="fas fa-search-plus overlay-icon"></i>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 @else
                     <div class="attachment-item">
-                        <div class="attachment-thumbnail gradient-1">
+                        <div class="attachment-thumbnail-43 no-attachment">
                             <i class="fas fa-image attachment-icon"></i>
+                            <small class="attachment-filename">No attachments</small>
                         </div>
-                        <small class="attachment-filename">No attachments</small>
                     </div>
                 @endif
+            </div>
+        </div>
+
+        <!-- Image Modal -->
+        <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeImageModal()">&times;</span>
+                <img id="modalImage" src="" alt="" class="modal-image">
+                <div class="modal-caption">
+                    <span id="modalCaption"></span>
+                </div>
             </div>
         </div>
 
@@ -111,4 +123,39 @@
 
     <!-- Custom JavaScript for this page -->
     <script src="{{ asset('js/viewissues.js') }}"></script>
+    
+    <script>
+    function openImageModal(imageSrc, caption) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        
+        modal.style.display = 'block';
+        modalImg.src = imageSrc;
+        modalCaption.textContent = caption;
+        
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.style.display = 'none';
+        
+        // Restore body scroll
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal when pressing Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeImageModal();
+        }
+    });
+    
+    // Prevent modal from closing when clicking on the image
+    document.getElementById('modalImage').addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+    </script>
 @stop
