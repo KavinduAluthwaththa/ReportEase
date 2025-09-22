@@ -2,8 +2,8 @@
 
 @section('content')
 	<link rel="stylesheet" href="{{ asset('css/guest.css') }}">
-	<div class="container">
-		<h1 class="page-title" style="margin: 32px 0;">Report a new Issue</h1>
+	<div class="container" style="margin-left: -40%; margin-top: -20%;">
+		<h1 class="page-title" style="margin: 32px 0;">Report a New Issue</h1>
 
 		@if ($errors->any())
 			<div class="alert alert-danger">
