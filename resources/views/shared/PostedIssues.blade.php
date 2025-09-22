@@ -5,7 +5,7 @@
 
     <div class="reports-container">
         <div class="header-container">
-            <h1 class="reports-title">All Reported Issues</h1>
+            <h1 class="reports-title">All <span style="color: #e67e22;">Reported Issues</span></h1>
         </div>
 
         <table class="reports-table">

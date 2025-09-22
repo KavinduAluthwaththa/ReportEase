@@ -73,7 +73,6 @@ body {
 }
 
 .form-group input {
-    width: 93%;
     padding: 14px; /* Larger padding for inputs */
     border: 1px solid #ddd; /* Lighter border */
     border-radius: 5px;
