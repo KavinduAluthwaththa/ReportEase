@@ -126,6 +126,17 @@ class CreateCompleteWadProjectSchema extends Migration
             $table->foreign('notific_id')->references('notific_id')->on('Notifications');
             $table->foreign('receiver_id')->references('user_id')->on('Users');
         });
+
+        // Create issue_images table
+        Schema::create('issue_images', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('issue_id');
+            $table->string('original_path');
+            $table->string('thumbnail_path');
+            $table->timestamps();
+
+            $table->foreign('issue_id')->references('issue_id')->on('Issues');
+        });
     }
 
     /**
@@ -135,6 +146,7 @@ class CreateCompleteWadProjectSchema extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('issue_images');
         Schema::dropIfExists('Notify');
         Schema::dropIfExists('Notifications');
         Schema::dropIfExists('Issue_Upvote');
