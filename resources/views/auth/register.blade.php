@@ -69,6 +69,9 @@
                 <div class="form-actions">
                     <button type="submit" class="btn-login">REGISTER</button>
                 </div>
+                <div class="create-account-section">
+                    <p>Already Have An Account ?<a href="/login" class="btn-create-account"> Login</a></p>
+                </div>
             </form>
         </div>
     </div>

@@ -57,6 +57,14 @@ body {
     justify-content: center;
 }
 
+.auth-left a{
+    text-decoration: none;
+    color: #000;
+}
+.auth-left a:hover{
+    font-weight: bold;
+}
+
 .login-form h2 {
     font-size: 28px;
     margin-bottom: 30px;
