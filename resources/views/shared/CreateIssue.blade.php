@@ -2,8 +2,9 @@
 
 @section('content')
 	<link rel="stylesheet" href="{{ asset('css/guest.css') }}">
-	<div class="container" style="margin-left: -40%; margin-top: -20%;">
-		<h1 class="page-title" style="margin: 32px 0;">Report a New Issue</h1>
+	<div class="create-issue-wrapper">
+		<div class="create-issue-container">
+			<h1 class="page-title" style="margin: 32px 0;font-size: 2.5rem;">Report a New Issue</h1>
 
 		@if ($errors->any())
 			<div class="alert alert-danger">
@@ -33,22 +34,16 @@
 				<input type="text" name="location" class="form-control" placeholder="e.g., Building A, Room 101, Main Hall" value="{{ old('location') }}" required>
 			</div>
 
-			<div class="form-group" style="display:flex; align-items:center; gap:16px;">
-				<div style="width:64px; height:64px; border-radius:8px; background:#f2f2f2; display:flex; align-items:center; justify-content:center;">
-					<i class="fas fa-image" style="font-size:24px; color:#999;"></i>
-				</div>
-				<div style="flex:1;">
-					<label class="info-label" style="display:block;">Upload up to 3 evidence images (JPG/PNG, max 2MB each)</label>
-					<div class="custom-file">
-						<input type="file" name="evidence[]" class="custom-file-input" id="evidence" multiple accept=".jpg,.jpeg,.png">
-					</div>
-				</div>
+			<div class="form-group">
+				<label class="info-label">Upload up to 3 evidence images (JPG/PNG, max 2MB each)</label>
+				<input type="file" name="evidence[]" class="form-control" id="evidence" multiple accept=".jpg,.jpeg,.png">
 			</div>
 
 			<div style="margin-top:24px;">
 				<button type="submit" class="submit-button submit-button-full-width">SUBMIT</button>
 			</div>
 		</form>
+		</div>
 	</div>
 @stop
 

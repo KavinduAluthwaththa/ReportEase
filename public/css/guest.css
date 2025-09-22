@@ -3,7 +3,20 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* Default background, can be overridden */
+    background-color: #f4f4f4; /* Default bac.form-group {
+    margin-bottom: 20px;
+}
+
+.info-label {
+    display: block;
+    color: #6c757d;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.form-footer {nd, can be overridden */
     height: 100%;
 }
 
@@ -113,7 +126,7 @@ body {
     border-radius: 5px;
     padding: 14px;
     font-size: 16px;
-    width: 175%;
+    width: 100%;
     margin-bottom: 12px;
     background-color: #ffffff;
     box-sizing: border-box;
@@ -123,6 +136,19 @@ body {
 .form-control:focus {
     outline: none;
     border-color: #d0d0d0;
+}
+
+.form-control[type="file"] {
+    padding: 10px;
+    border: 2px dashed #ddd;
+    background-color: #fafafa;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    overflow-y: auto;
+    font-family: inherit;
 }
 
 .alert {
@@ -144,8 +170,28 @@ body {
     color: #a94442;
 }
 
+.create-issue-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    width: 100%;
+}
+
+.create-issue-container {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+}
+
 .form-group {
-    margin-bottom: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    display: block;
+    position: static;
 }
 
 .form-footer {
