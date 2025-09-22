@@ -24,15 +24,16 @@
             <form method="POST" action="{{ route('login.custom') }}">
                 @csrf
                 <div class="form-group">
-                    <input id="email" type="email" name="email" placeholder="Email Address *" required>
+                    <input id="email" type="email" name="email" placeholder="Email Address *" required style="width: 100%;">
                 </div>
                 <div class="form-group">
-                    <input id="password" type="password" name="password" placeholder="Password *" required>
+                    <input id="password" type="password" name="password" placeholder="Password *" required style="width: 100%;">
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-login">LOGIN</button>
                     <a href="{{ route('password.request') }}" class="forgot-password">Forgot your password?</a>
                 </div>
+
             </form>
             <div class="create-account-section">
                 <p>Don't Have An Account ?</p>
